@@ -27,13 +27,14 @@ MESI Protocol
 
 # Trace file format
 ## N Address
-0. Read data request to L1 data cache
-1. Write data request to L1 data cache
-2. Instructions fetch (a read request to L1 instruction cache)
-3. Invalidate command from L2
-4. Data request from L2 (in response to snoop)
-8. Clear the cache and reset all state (and statistics)
-9. Print contents and state of the cache (allow subsequent trace activity)
+Where n is
+0 Read data request to L1 data cache
+1 Write data request to L1 data cache
+2 Instructions fetch (a read request to L1 instruction cache)
+3 Invalidate command from L2
+4 Data request from L2 (in response to snoop)
+8 Clear the cache and reset all state (and statistics)
+9 Print contents and state of the cache (allow subsequent trace activity)
 
 # Modes
 ## Mode 1
