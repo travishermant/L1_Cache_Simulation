@@ -1,0 +1,15 @@
+Instruction Cache
+	Reads parsed lines from file
+	Checks for the last bit (n, leftmost hex) to see what kind of instruction it is
+Data Cache
+	Isn't actually concerned with contents, we're only dealing with addresses
+	Storing tags, not actual "data"
+MESI function updating	!!!
+	MESI for data, ESI for instruction
+LRU function updating	!!!
+	Hit and miss, adjust according to position
+Testbench
+	Parse through file
+	http://project-veripage.com/plusarg.php
+Statistics
+	Counts number of hits, read, writes, misses, etc.
