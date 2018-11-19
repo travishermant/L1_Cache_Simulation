@@ -45,8 +45,11 @@
 #define	I				3
 
 struct cache{
-	int MESI;
-	int LRU;
+	int mesi;
+	int lru;
+	int tag;
+	int index;
+	int b_offset;
 };
 
 
