@@ -10,11 +10,12 @@
 FILE 	*fp;				// file pointer
 char 	*trace_file;		// temporary buffer for trace file name
 char	*trace_buffer[20];	// buffer for reading lines in tracefile
-char	*buff;
+char	*token;
+long	buff[2];
 int		mode;				// 1 or 2, decides				
 int		n;					// Trace "n" commands
 uint32_t address;
-int 	i;
+int 	i = 0;
 
 //Stat variables
 int cache_read, cache_write = 0;
@@ -49,6 +50,8 @@ int main(int argc, char *argv[]){
 	
 	//	Read through Trace File line by line
 	while(fgets(trace_buffer, 20, fp) != NULL){
+		
+		/*
 		n = trace_buffer[0];	// Trace command index
 		
 		//TODO
@@ -62,13 +65,46 @@ int main(int argc, char *argv[]){
 		while(trace_buffer[j+1] != '\n'){
 			j++;
 		}
+		*/
 		
+		i = 0;
+		while ((token = strsep(&trace_buffer, " ")) != NULL){
+			buff[i] = strtol (token, NULL, 16);
+			i++;
+		}
 		
+		n = buff[0];
+		address = buff[1];
+		
+		switch(n){
+		case L1_READ_DATA:
+		
+			break;
+		case L1_WRITE_DATA:
+		
+			break;
+		case L1_READ_INST:
+		
+			break;
+		case L2_INVALID:
+		
+			break;
+		case L2_SNOOP_DATA:
+		
+			break;
+		case RESET:
+			
+			break;
+		case PRINT:
+		
+			break;
+		default:
+			print("Incorrect trace %s\n", trace_buffer);
+			break;
 	
 	
 	
-	
-	
+		}
 	}
 	
 	
@@ -78,4 +114,5 @@ int main(int argc, char *argv[]){
 	
 	
 	fclose(fp);
+	return;
 }
