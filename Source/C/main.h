@@ -52,5 +52,9 @@ struct cache{
 	int b_offset;
 };
 
+struct stats{
+	int cache_read, cache_write, cache_hit, cache_miss;	
+};	
+
 
 #endif

@@ -6,6 +6,8 @@
 */
 
 #include "main.h"
+#include "statistics.h"
+
 
 FILE 	*fp;				// file pointer
 char 	*trace_file;		// temporary buffer for trace file name
@@ -18,16 +20,18 @@ uint32_t address;
 int 	i = 0;
 
 //Stat variables
-int cache_read, cache_write = 0;
-int cache_hit, cache_miss = 0;
-float hit_ratio = 0;
+//int cache_read, cache_write = 0;
+//int cache_hit, cache_miss = 0;
+//float hit_ratio = 0;
+
+struct stats	Stats_Cache;
 
 struct cache	Inst_Cache[SETS][INST_WAY], Data_Cache[SETS][DATA_WAY];
 
 int main(int argc, char *argv[]){
 	if(argc != 3){
 		printf("Mode and Trace File required \n Enter mode first and then file \n");
-		printf("Mode is 1 or 2, filename format is '<file>.txt'\n");
+		printf("Mode is 0 or 1, filename format is '<file>.txt'\n");
 		return -1;
 	}
 	else if(argc == 3){
@@ -78,25 +82,28 @@ int main(int argc, char *argv[]){
 		
 		switch(n){
 		case L1_READ_DATA:
-		
+			// Data Cache Function
 			break;
 		case L1_WRITE_DATA:
-		
+			// Data Cache Function
 			break;
 		case L1_READ_INST:
-		
+			// Inst Cache Function
 			break;
 		case L2_INVALID:
-		
+			// Just a MESI function
 			break;
 		case L2_SNOOP_DATA:
-		
+			// Just a MESI function
 			break;
 		case RESET:
-			
+			// Both cache functions to reset
+			// Stat function to clear all
+			Clear_Stats();
 			break;
 		case PRINT:
-		
+			// Stat function to print
+			Print_Stats();
 			break;
 		default:
 			print("Incorrect trace %s\n", trace_buffer);
