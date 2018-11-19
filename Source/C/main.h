@@ -12,6 +12,8 @@
 #include	<stdlib.h>
 #include	<stdint.h>
 #include	<math.h>
+#include	<string.h>
+#include	<iostream.h>
 
 #define	KILO			1024
 #define MEGA			(KILO * KILO)
