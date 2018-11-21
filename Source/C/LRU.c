@@ -22,7 +22,7 @@ int lru_update(int set ,int way, int tag, int hit, int miss, int lru)  //Use str
 		}
 	check = 0;
 	}
-	elseif(thecache[set][way] == NULL){
+	else if(thecache[set][way] == NULL){
 	// Initializing the cache, so NULL means empty way
 		thecache[set][way].lru = way - 1;
 	check = 0;
