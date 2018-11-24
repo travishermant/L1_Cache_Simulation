@@ -52,7 +52,8 @@ int main(int argc, char *argv[]){
 		return -1;
 	}
 	//	Initialize caches
-	
+	IntClear();
+	DataClear();
 	
 	//	Read through Trace File line by line
 	while(fgets(trace_buffer, 20, fp) != NULL){

@@ -41,7 +41,7 @@ int InstRead(int tag_value, int idx);
 
 void InstUpdateLRU(int idx, int idc);
 void InstEvictLRU(int tag_value, int idx);
-void InstInitalState(void); 
+void InstClear(void); 
 
 
 //exclusive, invalid... no mesi state

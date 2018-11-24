@@ -182,24 +182,24 @@ void InstEvictLRU(int tag_value, int idx)
 	}
 
 }
-/*
-void Inst_Inital_State(void)
+
+void InstClear(void)
 {
 	//statistics variables back to zero 
-	int cache_read = 0, cache_write = 0, cache_hit = 0, cache_miss = 0;
+	//int cache_read = 0, cache_write = 0, cache_hit = 0, cache_miss = 0;
 	int idx = 0, idc = 0; //index
 	//for loop to change all MESI back to invalid and reset LRU order back to inital order
-	for (idx;idx<SETS;idx++)
+	for(idx; idx<SETS; idx++)
 	{
-		for (idc;idc<INST_WAY;idc++)
+		for(idc; idc<INST_WAY; idc++)
 		{
-			Inst_Cache[idx][idc].lru = INST_WAY -1; //decrement lru values 
+			Inst_Cache[idx][idc].lru = NULL; //decrement lru values 
 			Inst_Cache[idx][idc].mesi = 3; //invalid 
 		}
 	}
 }
 
-*/
+
 
 //exclusive, invalid, shared ... no modified state
 
