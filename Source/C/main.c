@@ -52,7 +52,7 @@ int main(int argc, char *argv[]){
 		return -1;
 	}
 	//	Initialize caches
-	IntClear();
+	InstClear();
 	DataClear();
 	
 	//	Read through Trace File line by line
