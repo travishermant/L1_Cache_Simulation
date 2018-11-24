@@ -80,8 +80,8 @@ int instruction_miss(int tag_value, int idx)
 //Inst_Cache[passed in value][local variable used for FOR loop].mesi = 3
 
 //update LRU by passing value fo the pararmenters paseed into Intruction_miss function
-	int idc = 0;
-	for (idc;idc<INST_WAY;idc++)
+	int idc = 1;
+	for (idc;idc<=INST_WAY;idc++)
 	{
 		if (Inst_Cache[idx][idc].mesi == 3)
 		{
@@ -89,10 +89,10 @@ int instruction_miss(int tag_value, int idx)
 			Inst_Cache[idx][idc].mesi = 2;
 			instruction_update_LRU(tag_value,idx);
 		}
-		else if (idc==(INST_WAY-1))
+		else if (idc==(INST_WAY))
 		{
 			return 0;
-			printf("idc==INST_WAY-1");
+			printf("ERROR! traverse whole cache. instruction_miss");
 		}
 		//ONLY FOR TESTING
 		else
@@ -124,8 +124,11 @@ int instruction_read(int tag_value, int idx)
 	return successfulFlag;
 }
 
-void instruction_update_LRU(/*takes two parameters*/)
+void instruction_update_LRU(int idx, int idc)
 {
+	//get current LRU
+	int currentInstruction = Inst_Cache[idx][idc].lru;
+	int temp_INST_WAY =1;
 //check if Inst_Cache[parm1][parm2].LRU == 0
 	//no need to change anything, return 0
 
@@ -133,27 +136,70 @@ void instruction_update_LRU(/*takes two parameters*/)
 	// any LRU bit less than the current bit should get decremented/incremented depending on 
 	// 00 for LRU or 11 for LRU
 
-//int current = Inst_Cache[parm1][parm2].LRU;
-// Inst_Cache[parm1][parm2].LRU = 0
-// anything less tahn current, increment
-// anything less than current, decrement
+//check to see if instruction is currently the least recently used
+//if so, do nothing
+	if (Inst_Cache[idx][idc].lru == 0)
+	{
+		printf("LRU update was NOT required")
+		return;
+	}
 
-if (Inst_Cache)
+	//if its not
+	// anything less than current, increment
+	// anything less than current, decrement
+	else
+	{
+		printf("LRU update was required");
+		for (temp_INST_WAY;temp_INST_WAY <= INST_WAY;temp_INST_WAY++)
+		{
+			//change values that are less than currentInstruction
+			if (Inst_Cache[idx][idc].lru < currentInstruction)
+			{
+				//increment value
+				Inst_Cache[idx][idc].lru++;
+			}
+		}
+
+	}
+	//return???
 }
-void instruction_evect_LRU()
+
+void instruction_evect_LRU(int tag_value, int idx)
 {
-//while parm2 is less than INST_WAY -1, 
-	//if ~[parm1][parm2].LRU == INST_WAY -1 
+//while parm2 is less than INST_WAY 
+	//if ~[parm1][parm2].LRU == INST_WAY
 		//~.tag = tag (parm2)
 		//call instruction_update_LRU
-
+	int idc=1;
+	for (idc;idc<INST_WAY;idc++)
+	{
+		//check for equivalence between traversed value and testing value
+		if (Inst_Cache[idx][idc].lru == INST_WAY)
+		{
+			//set new value
+			Inst_Cache[idx][idc].tag = tag_value;
+			//update LRU order
+			instruction_update_LRU(tag_value,idx);
+			return;
+		}
+		printf("ERROR! cant find testing value in the instruction cache. instruction_evect_LRU")
+	}
 
 }
 void instruction_inital_sate(void)
 {
 	//statistics variables back to zero 
-	int cache_read = 0, cache_write = 0, cache_hit = 0, cache_miss = 0;	
+	int cache_read = 0, cache_write = 0, cache_hit = 0, cache_miss = 0;
+	int idx = 0, idc = 0; //index
 	//for loop to change all MESI back to invalid and reset LRU order back to inital order
+	for (idx;idx<SETS;idx++)
+	{
+		for (idc;idc<INST_WAY;idc++)
+		{
+			Inst_Cache[idx][idc].lru = INST_WAY -1; //decrement lru values 
+			Inst_Cache[idx][idc].mesi = 3; //invalid 
+		}
+	}
 }
 
 void instruction_statistics(/*no parameters*/)
