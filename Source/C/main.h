@@ -15,6 +15,9 @@
 #include	<string.h>
 #include	<iostream.h>
 
+#define FALSE			0
+#define TRUE			1
+
 #define	KILO			1024
 #define MEGA			(KILO * KILO)
 

@@ -6,26 +6,26 @@
 */
 
 #include "LRU.h"
-extern struct cache thecache;
+extern struct cache	Inst_Cache[SETS][INST_WAY], Data_Cache[SETS][DATA_WAY];
 
-int lru_update(int set ,int way, int tag, int hit, int miss, int lru)  //Use struct cache variables
+int InstUpdateLRU(int set, int way, int tag, int hit, int miss, int lru)  //Use struct cache variables
 {
 	int check = 0;
 	
-	if((hit || miss) && thecache[set][way] != NULL){
+	if((hit || miss) && Inst_Cache[set][way] != NULL){
 	// Set way with current tag to MRU
 	// Decrement LRU bits to the right of the MRU
-		thecache[set][way].lru = 7;
+		Inst_Cache[set][way].lru = 7;
 		while(way != 8){
 			++way;
-			thecache[set][way].lru = (lru - 1);
+			Inst_Cache[set][way].lru = (lru - 1);
 		}
 	check = 0;
 	}
-	else if(thecache[set][way] == NULL){
+	else if(Inst_Cache[set][way] == NULL){
 	// Initializing the cache, so NULL means empty way
-		thecache[set][way].lru = way - 1;
-	check = 0;
+		Inst_Cache[set][way].lru = way - 1;
+		check = 0;
 	}
 	else
 		check = 1;
@@ -33,5 +33,33 @@ int lru_update(int set ,int way, int tag, int hit, int miss, int lru)  //Use str
 // Returns 0 if went through successfully
 // Else returns 1
 	
-reutrn check;
+return check;
+}
+
+int DataUpdateLRU(int set, int way, int tag, int hit, int miss, int lru)  //Use struct cache variables
+{
+	int check = 0;
+	
+	if((hit || miss) && Data_Cache[set][way] != NULL){
+	// Set way with current tag to MRU
+	// Decrement LRU bits to the right of the MRU
+		Data_Cache[set][way].lru = 7;
+		while(way != 8){
+			++way;
+			Data_Cache[set][way].lru = (lru - 1);
+		}
+	check = 0;
+	}
+	else if(Data_Cache[set][way] == NULL){
+	// Initializing the cache, so NULL means empty way
+		Data_Cache[set][way].lru = way - 1;
+		check = 0;
+	}
+	else
+		check = 1;
+	
+// Returns 0 if went through successfully
+// Else returns 1
+	
+return check;
 }

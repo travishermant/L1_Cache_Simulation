@@ -6,3 +6,5 @@
 */
 
 #include "main.h"
+
+int UpdateMESI(int set, int way, int n);

@@ -30,20 +30,18 @@ Inst_Cache[SETS][INST_WAY]
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-
 #include <Instruction.h>
-
+#include "main.h"
 //TODO: add function files
 
 //functions
-int instruction_hit(int tag_value, int idx);
-int instruction_miss(int tag_value, int idx);
-int instruction_read(int tag_value, int idx);
+int InstHit(int tag_value, int idx);
+int InstMiss(int tag_value, int idx);
+int InstRead(int tag_value, int idx);
 
-void instruction_update_LRU(int idx, int idc);
-void instruction_evect_LRU(int tag_value, int idx);
-void instruction_inital_sate(void);
-void instruction_statistics(/*no paramaters*/); //different file?
+void InstUpdateLRU(int idx, int idc);
+void InstEvictLRU(int tag_value, int idx);
+void InstInitalState(void); 
 
 
 //exclusive, invalid... no mesi state

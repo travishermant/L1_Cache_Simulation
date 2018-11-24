@@ -7,5 +7,5 @@
 
 #include "main.h"
 
-void Clear_Stats();
-void Print_Stats();
+void ClearStats();
+void PrintStats();

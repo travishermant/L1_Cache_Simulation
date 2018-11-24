@@ -7,7 +7,7 @@
 
 extern struct stats Stats_Cache;
 
-void Clear_Stats(){
+void ClearStats(){
 	Stats_Cache.cache_read,
 	Stats_Cache.cache_write,
 	Stats_Cache.cache_hit,
@@ -15,7 +15,7 @@ void Clear_Stats(){
 return;
 }
 
-void Print_Stats(){
+void PrintStats(){
 	float ratio; 
 	int total;
 	

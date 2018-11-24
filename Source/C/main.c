@@ -7,6 +7,8 @@
 
 #include "main.h"
 #include "statistics.h"
+#include "instruction_cache.h"
+#include "data_cache.h"
 
 
 FILE 	*fp;				// file pointer
@@ -99,11 +101,11 @@ int main(int argc, char *argv[]){
 		case RESET:
 			// Both cache functions to reset
 			// Stat function to clear all
-			Clear_Stats();
+			ClearStats();
 			break;
 		case PRINT:
 			// Stat function to print
-			Print_Stats();
+			PrintStats();
 			break;
 		default:
 			print("Incorrect trace %s\n", trace_buffer);
