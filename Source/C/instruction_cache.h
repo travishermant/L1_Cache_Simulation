@@ -38,9 +38,9 @@ Inst_Cache[SETS][INST_WAY]
 
 //functions
 
-int instruction_hit(/*takes two parameters*/);
-int instruction_miss(/*takes two parameters*/);
-int instruction_read(/*takes two parameters*/);
+int instruction_hit(int tag_value, int idx);
+int instruction_miss(int tag_value, int idx);
+int instruction_read(int tag_value, int idx);
 
 void instruction_update_LRU(/*takes two parameters*/);
 void instruction_evect_LRU(/*takes two parameters*/);

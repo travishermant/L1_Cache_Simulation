@@ -9,7 +9,7 @@ Cache for direct access by the core processor
 -instruction cache doesnt write 
 
 Inst_Cache[SETS][INST_WAY] //our code
-Instr_Cache[I_SETS][I_WAY] //their code
+Instr_Cache[I_SETS][I_WAY] 
 
 //MESI
 #define	M				0
@@ -44,14 +44,14 @@ int instruction_hit(int tag_value, int idx)
 //	int unsuccesfulFlag=0;
 	for (idc;idc<INST_WAY;idc++)
 	{
-		if (Instr_Cache[idx][idc].tag == tag_value)
+		if (Inst_Cache[idx][idc].tag == tag_value)
 		{
-			if (Instr_Cache[idx][idc].mesi != 3)
+			if (Inst_Cache[idx][idc].mesi != 3)
 			{
 				instruction_update_LRU(tag_value, idc);
 				return successfulFlag; //no idea if any number thats not !=0 works
 			}
-			else if (Instr_Cache[idx][idc].mesi == 3)
+			else if (Inst_Cache[idx][idc].mesi == 3)
 			{
 				printf("ERROR! invalid state cannot be hit");
 			}
@@ -102,7 +102,7 @@ int instruction_miss(int tag_value, int idx)
 	}
 
 }
-int instruction_read(/*takes two parameters*/)
+int instruction_read(int tag_value, int idx)
 {	
 //check status or return values of instruction_hit AND instruction_miss are both !0
 //call instruction_evect_LRU and pass it the parameters passed to this function
@@ -133,10 +133,12 @@ void instruction_update_LRU(/*takes two parameters*/)
 	// any LRU bit less than the current bit should get decremented/incremented depending on 
 	// 00 for LRU or 11 for LRU
 
-//int current = Instr_Cache[parm1][parm2].LRU;
-// Instr_Cache[parm1][parm2].LRU = 0
+//int current = Inst_Cache[parm1][parm2].LRU;
+// Inst_Cache[parm1][parm2].LRU = 0
 // anything less tahn current, increment
 // anything less than current, decrement
+
+if (Inst_Cache)
 }
 void instruction_evect_LRU()
 {
@@ -144,6 +146,7 @@ void instruction_evect_LRU()
 	//if ~[parm1][parm2].LRU == INST_WAY -1 
 		//~.tag = tag (parm2)
 		//call instruction_update_LRU
+
 
 }
 void instruction_inital_sate(void)
