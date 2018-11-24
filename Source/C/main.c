@@ -101,6 +101,8 @@ int main(int argc, char *argv[]){
 			break;
 		case RESET:
 			// Both cache functions to reset
+			InstClear();
+			DataClear();
 			// Stat function to clear all
 			ClearStats();
 			break;
