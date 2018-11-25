@@ -66,7 +66,7 @@ void data_clear(void)
 	{
 		for(index2 = 0; index2 < DATA_WAY; index2++)
 		{
-			cache_data[index1][index2].lru = NULL; //decrement LRU values
+			cache_data[index1][index2].lru = -1; //decrement LRU values
 			cache_data[index1][index2].mesi = 3;	//v	
 		}
 	}
