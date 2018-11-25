@@ -8,7 +8,7 @@
 #include "LRU.h"
 extern struct cache	Inst_Cache[SETS][INST_WAY], Data_Cache[SETS][DATA_WAY];
 
-int InstUpdateLRU(int set, int way, int tag, int lru)  //Use struct cache variables
+int InstUpdateLRU(int set, int way, int lru)  //Use struct cache variables
 {
 	int check = 0;
 	
@@ -36,7 +36,7 @@ int InstUpdateLRU(int set, int way, int tag, int lru)  //Use struct cache variab
 return check;
 }
 
-int DataUpdateLRU(int set, int way, int tag, int lru)  //Use struct cache variables
+int DataUpdateLRU(int set, int way, int lru)  //Use struct cache variables
 {
 	int check = 0;
 	
