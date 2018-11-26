@@ -97,7 +97,7 @@ void DataEvictLRU(int tag_size, int set_index)
 			if(cache_data[set_index][index2].mesi == 0)
 			{
 				cache_data[set_index][index2].tag = tag_size;	
-				DataUpdateLRU(tag_size, idx);
+				DataUpdateLRU(tag_size, set_index);
 				printf("Write to L2 cache");
 			}
 			else
