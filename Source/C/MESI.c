@@ -51,6 +51,7 @@ int UpdateMESI(int set, int way, int n /* 'n' from trace file */){
 		check = 0;
 	}
 	else if(n == 3){
+	//Invalidate command from L2
 		Inst_Cache[SETS][INST_WAY].mesi = 3;
 		check = 0;
 	}
