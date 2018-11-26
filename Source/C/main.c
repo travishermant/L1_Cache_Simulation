@@ -131,4 +131,6 @@ void SplitAddress(){
 	temp_tag = address >> 20;
 	temp_index  = (address << 12) >> 18;
 	temp_offset = (address << 26) >> 26;
+	/*printf("tag %ld %lx \n index %ld %lx \n offset %ld %lx \n", 
+	temp_tag, temp_tag, temp_index, temp_index, temp_offset, temp_offset);*/
 }
