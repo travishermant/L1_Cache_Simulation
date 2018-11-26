@@ -84,11 +84,11 @@ int main(int argc, char *argv[]){
 		switch(n){
 			case L1_READ_DATA:
 				// Data Cache Function
-				DataRead(temp_tag, temp_index);
+				DataRead(temp_index, temp_tag);
 				break;
 			case L1_WRITE_DATA:
 				// Data Cache Function
-				DataRead(temp_tag, temp_index);
+				DataRead(temp_index, temp_tag);
 				break;
 			case L1_READ_INST:
 				// Inst Cache Function

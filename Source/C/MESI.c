@@ -51,6 +51,11 @@ int UpdateMESI(int set, int way, int n /* 'n' from trace file */){
 		Data_Cache[set][way].mesi = I;
 		check = 0;
 	}
+	/*
+	else if(n == 2){
+		Inst_Cache[set][way].mesi =  ;??
+		check = 0;
+	}*/
 	else
 		check = 1;
 	
