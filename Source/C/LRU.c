@@ -7,7 +7,6 @@
 */
 
 #include "LRU.h"
-extern struct cache	Inst_Cache[SETS][INST_WAY], Data_Cache[SETS][DATA_WAY];
 
 int InstUpdateLRU(int set, int way)  //Use struct cache variables
 {
