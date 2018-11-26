@@ -33,7 +33,7 @@ int DataHit(int set_index, int tag_size)
 	for(i = 0; i < DATA_WAY; i++)
 	{
 	// Check if the tag bits are equivalent and check if the state is valid
-		if(Data_Cache[set_index][i].mesi != I && Data_Cache[set_index][i].TAG == tag_size)
+		if(Data_Cache[set_index][i].mesi != I && Data_Cache[set_index][i].tag == tag_size)
 		{
 			DataUpdateLRU(set_index, i);
 		}
