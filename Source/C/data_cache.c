@@ -91,7 +91,7 @@ void DataEvictLRU(int tag_size, int set_index)
 	int index2 = 1;
 	for(index2; index2 < DATA_WAY; index2++)
 	{
-		if(Data_Cache[set_index][index2].lru == DATA_WAY)
+		if(Data_Cache[set_index][index2].lru == DATA_WAY - 1)
 		{	
 		//check which state we are in
 			if(cache_data[set_index][index2].mesi == 0)
