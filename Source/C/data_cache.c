@@ -30,7 +30,7 @@ int DataRead(int set_index, int tag_size)
 // This function checks for a hit and takes appropriate action
 int DataHit(int set_index, int tag_size)
 {
-	for(i = 0; i < DATA_WAY; i++)
+	for(int i = 0; i < DATA_WAY; i++)
 	{
 	// Check if the tag bits are equivalent and check if the state is valid
 		if(Data_Cache[set_index][i].mesi != I && Data_Cache[set_index][i].tag == tag_size)
@@ -49,7 +49,7 @@ int DataHit(int set_index, int tag_size)
 int DataMiss(int set_index, int tag_size)
 {
 
-	for(i = 0; i < DATA_WAY; i++)
+	for(int i = 0; i < DATA_WAY; i++)
 	{
 		if(Data_Cache[set_index][i].mesi == I)
 		{
@@ -58,7 +58,7 @@ int DataMiss(int set_index, int tag_size)
 			Data_Cache[set_index][i].tag = tag_size;
 			Data_Cache[set_index][i].index = temp_index;
 			Data_Cache[set_index][i].b_offset = temp_offset;
-			DataUpdateLRU(set_index, i, tag_size);	//lruupdate function still unsure how it works
+			DataUpdateLRU(set_index, i);	//lruupdate function still unsure how it works
 			return TRUE;
 		}
 		if(i == DATA_WAY - 1)
@@ -75,7 +75,7 @@ void DataClear(void)
 	int index1 = 0;	//set index
 	int index2 = 0; //way index
 
-	for(index1 = 0; index1 < DATA_SETS; index1++)
+	for(index1 = 0; index1 < SETS; index1++)
 	{
 		for(index2 = 0; index2 < DATA_WAY; index2++)
 		{
@@ -100,7 +100,7 @@ void DataEvictLRU(int tag_size, int set_index)
 			if(Data_Cache[set_index][index2].mesi == M)
 			{
 				Data_Cache[set_index][index2].tag = tag_size;	
-				DataUpdateLRU(tag_size, set_index);
+				DataUpdateLRU(tag_size, set_index);		//probably wrong
 				printf("Write to L2 cache	<0x%08x>\n", address);
 			}
 			else
