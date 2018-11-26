@@ -113,7 +113,7 @@ int InstRead(int tag_value, int idx)
 //if instruction_hit !0 and instruction_miss is 0, return 0
 //else, return 1
 	if (InstHit(tag_value,idx) == FALSE){
-		if (InstMiss(tag_value,idx)) == FALSE)	
+		if (InstMiss(tag_value,idx) == FALSE)	
 			InstEvictLRU(tag_value,idx);
 		return 0;
 	}

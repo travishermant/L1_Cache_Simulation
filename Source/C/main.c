@@ -78,7 +78,7 @@ int main(int argc, char *argv[]){
 		SplitAddress();
 		
 		//int InstRead(int tag_value, int idx);
-		//int UpdateMESI(int set, int n);
+		//int UpdateMESI(int set, int way, int n);
 		//int DataRead(int set_index, int tag_size);
 		
 		switch(n){
@@ -96,11 +96,11 @@ int main(int argc, char *argv[]){
 				break;
 			case L2_INVALID:
 				// Just a MESI function
-				UpdateMESI(temp_index, n);
+				UpdateMESI(temp_index, 0, n);
 				break;
 			case L2_SNOOP_DATA:
 				// Just a MESI function
-				UpdateMESI(temp_index, n);
+				UpdateMESI(temp_index, 0, n);
 				break;
 			case RESET:
 				// Both cache functions to reset
