@@ -36,6 +36,9 @@ Inst_Cache[SETS][INST_WAY]
 
 //TODO: add function files
 
+extern uint32_t address, temp_tag, temp_index, temp_offset;
+extern int	mode, n;	
+
 //functions
 int InstHit(int tag_value, int idx);
 int InstMiss(int tag_value, int idx);
