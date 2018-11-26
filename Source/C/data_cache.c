@@ -53,8 +53,10 @@ int DataMiss(int set_index, int tag_size)
 	{
 		if(Data_Cache[set_index][i].mesi == I)
 		{
-			//cache_data[set_index][i].ADDRESS = address;
-			Data_Cache[set_index][i].TAG = tag_size;
+			Data_Cache[set_index][i].address = address;
+			Data_Cache[set_index][i].tag = tag_size;
+			Data_Cache[set_index][i].index = temp_index;
+			Data_Cache[set_index][i].b_offset = temp_offset;
 			DataUpdateLRU(set_index, i, tag_size);	//lruupdate function still unsure how it works
 			return TRUE;
 		}
