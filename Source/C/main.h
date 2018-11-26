@@ -6,7 +6,7 @@
 */
 
 
-void SplitCache();
+void SplitAddress();
 
 #ifndef _GENERAL
 #define _GENERAL
