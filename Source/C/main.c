@@ -59,7 +59,7 @@ int main(int argc, char *argv[]){
 	while(fgets(trace_buffer, sizeof(trace_buffer), fp) != NULL){
 		
 		i = 0;
-		while ((token = strsep(&trace_buffer, " ")) != NULL){
+		while ((token = strsep(trace_buffer, " ")) != NULL){
 			buff[i] = strtol(token, NULL, 16);
 			i++;
 		}
