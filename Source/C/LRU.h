@@ -8,5 +8,5 @@
 #include "main.h"
 
 //Prototypes
-int InstUpdateLRU(int set ,int way, int lru);  //Use struct cache variables
-int DataUpdateLRU(int set ,int way, int lru);  //Use struct cache variables
+int InstUpdateLRU(int set ,int way);  //Use struct cache variables
+int DataUpdateLRU(int set ,int way);  //Use struct cache variables
