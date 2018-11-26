@@ -5,6 +5,9 @@
 	Most parameters and defines will be handled here
 */
 
+
+void SplitCache();
+
 #ifndef _GENERAL
 #define _GENERAL
 

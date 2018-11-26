@@ -200,7 +200,7 @@ void InstClear(void)
 		for(int idc = 0; idc<INST_WAY; idc++)
 		{
 			Inst_Cache[idx][idc].lru = -1; //decrement lru values 
-			Inst_Cache[idx][idc].mesi = 3; //invalid 
+			Inst_Cache[idx][idc].mesi = I; //invalid 
 		}
 	}
 }
