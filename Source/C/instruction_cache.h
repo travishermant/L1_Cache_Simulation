@@ -33,7 +33,8 @@ Inst_Cache[SETS][INST_WAY]
 #include <unistd.h>
 //#include <instruction_cache.h>
 #include "main.h"
-
+#include "LRU.h"
+#include "MESI.h"
 //TODO: add function files
 
 extern uint32_t address, temp_tag, temp_index, temp_offset;

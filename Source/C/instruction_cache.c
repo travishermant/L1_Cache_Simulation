@@ -20,7 +20,7 @@ Cache for direct access by the core processor
 //libraries 
 
 #include "instruction_cache.h"
-#include "LRU.h"
+
 extern struct cache Inst_Cache[SETS][INST_WAY];
 
 
