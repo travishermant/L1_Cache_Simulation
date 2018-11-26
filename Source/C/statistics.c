@@ -4,6 +4,7 @@
 
 
 */
+#include "statistics.h"
 
 extern struct stats Stats_Cache;
 
