@@ -59,11 +59,19 @@ int main(int argc, char *argv[]){
 	while(fgets(trace_buffer, sizeof(trace_buffer), fp) != NULL){
 		
 		i = 0;
+		/*
 		while ((token = strsep(&trace_buffer, " ")) != NULL){
 			buff[i] = strtol(token, NULL, 16);
 			i++;
 		}
-		
+		*/
+		token = strtok(trace_buffer, " ");
+        puts(token);
+        while (token != NULL){
+			buff[i] = (uint32_t) strtol(token, NULL, 16);
+			i++;
+			token = strtok(NULL, " ");
+		}
 		n = (int)buff[0];
 		address = (uint32_t)buff[1];
 		
