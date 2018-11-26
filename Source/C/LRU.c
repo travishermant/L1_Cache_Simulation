@@ -12,7 +12,7 @@ int InstUpdateLRU(int set, int way, int lru)  //Use struct cache variables
 {
 	int check = 0;
 	
-	if(Inst_Cache[set][way] != NULL){
+	if(Inst_Cache[set][way].lru >= 0 ){
 	// Set way with current tag to MRU
 	// Decrement LRU bits to the right of the MRU
 		Inst_Cache[set][way].lru = 7;
@@ -22,7 +22,7 @@ int InstUpdateLRU(int set, int way, int lru)  //Use struct cache variables
 		}
 	check = 0;
 	}
-	else if(Inst_Cache[set][way] == NULL){
+	else if(Inst_Cache[set][way].lru == -1){
 	// Initializing the cache, so NULL means empty way
 		Inst_Cache[set][way].lru = way - 1;
 		check = 0;
@@ -40,7 +40,7 @@ int DataUpdateLRU(int set, int way, int lru)  //Use struct cache variables
 {
 	int check = 0;
 	
-	if(Data_Cache[set][way] != NULL){
+	if(Data_Cache[set][way].lru >= 0){
 	// Set way with current tag to MRU
 	// Decrement LRU bits to the right of the MRU
 		Data_Cache[set][way].lru = 7;
@@ -50,7 +50,7 @@ int DataUpdateLRU(int set, int way, int lru)  //Use struct cache variables
 		}
 	check = 0;
 	}
-	else if(Data_Cache[set][way] == NULL){
+	else if(Data_Cache[set][way].lru == -1){
 	// Initializing the cache, so NULL means empty way
 		Data_Cache[set][way].lru = way - 1;
 		check = 0;

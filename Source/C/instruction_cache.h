@@ -30,7 +30,7 @@ Inst_Cache[SETS][INST_WAY]
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
-#include <Instruction.h>
+//#include <instruction_cache.h>
 #include "main.h"
 //TODO: add function files
 
@@ -39,7 +39,7 @@ int InstHit(int tag_value, int idx);
 int InstMiss(int tag_value, int idx);
 int InstRead(int tag_value, int idx);
 
-void InstUpdateLRU(int idx, int idc);
+//void InstUpdateLRU(int idx, int idc); LRU FILE TAKES CARE OF THIS
 void InstEvictLRU(int tag_value, int idx);
 void InstClear(void); 
 

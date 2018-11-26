@@ -19,6 +19,7 @@ Cache for direct access by the core processor
 
 //libraries 
 #include "instruction_cache.h"
+#include "LRU.h"
 
 extern struct cache Inst_Cache[SETS][INST_WAY];
 
@@ -41,9 +42,8 @@ int InstHit(int tag_value, int idx)
 
 //update LRU using vsalues obtained from instruction_hit
 
-
-	int idc=1;
-	for (idc; idc<INST_WAY; idc++)
+	//int idc=1;
+	for (int idc = 1; idc<INST_WAY; idc++)
 	{
 		if (Inst_Cache[idx][idc].tag == tag_value)
 		{
@@ -55,6 +55,7 @@ int InstHit(int tag_value, int idx)
 			else if (Inst_Cache[idx][idc].mesi == 3)
 			{
 				printf("ERROR! invalid state cannot be hit");
+				return FALSE;
 			}
 			/*
 			else if (idx == INST_WAY)
@@ -68,6 +69,7 @@ int InstHit(int tag_value, int idx)
 			return TRUE; //no idea if any number thats not !=0 works
 		//this value is used by LRU evict
 	}
+	return FALSE;
 
 }
 int InstMiss(int tag_value, int idx)
@@ -77,8 +79,8 @@ int InstMiss(int tag_value, int idx)
 //update instructio cache by setting 
 //Inst_Cache[passed in value][local variable used for FOR loop].mesi = 3
 //update LRU by passing value fo the pararmenters paseed into Intruction_miss function
-	int idc = 1;
-	for (idc;idc<=INST_WAY;idc++)
+	//int idc = 1;
+	for (int idc = 1;idc<=INST_WAY;idc++)
 	{
 		if (Inst_Cache[idx][idc].mesi == 3)
 		{
@@ -97,7 +99,7 @@ int InstMiss(int tag_value, int idx)
 			printf("ERROR! occurred in instruction_hit");
 		} 
 	}
-
+	return FALSE;
 }
 int InstRead(int tag_value, int idx)
 {	
@@ -106,25 +108,28 @@ int InstRead(int tag_value, int idx)
 
 //if instruction_hit !0 and instruction_miss is 0, return 0
 //else, return 1
-	if ((InstHit(int tag_value, int idx) == FALSE) && (InstMiss(int tag_value, int idx)) == FALSE)
+	if ((InstHit(tag_value,idx) == FALSE) && (InstMiss(tag_value,idx)) == FALSE)	
+//	if (!(InstHit(int tag_value, int idx) && InstMiss(int tag_value, int idx)))
 	{
-		Inst_Evict_LRU(int tag_value, int idx);
-		printf("instruction evicted because there wasnt a hit nor a miss. instruction_read")
+		InstEvictLRU(tag_value,idx);
+		printf("instruction evicted because there wasnt a hit nor a miss. instruction_read");
 		return 0;
 	}
 	else
 	{
-		printf("ERROR! InstRead cannot call evict because there was a hit or a miss")
+		printf("ERROR! InstRead cannot call evict because there was a hit or a miss");
 	}
-	return successfulFlag;
+	return TRUE;
 }
 
-
-void InstUpdateLRU(int idx, int idc)
+//NOT SURE vvv
+//int InstUpdateLRU(int idx,int idc);
+/*
 {
+
 	//get current LRU
 	int currentInstruction = Inst_Cache[idx][idc].lru;
-	int temp_INST_WAY = 1;
+	//int temp_INST_WAY = 1;
 //check if Inst_Cache[parm1][parm2].LRU == 0
 	//no need to change anything, return 0
 
@@ -136,7 +141,7 @@ void InstUpdateLRU(int idx, int idc)
 //if so, do nothing
 	if(Inst_Cache[idx][idc].lru == 7)
 	{
-		printf("LRU update was NOT required")
+		printf("LRU update was NOT required");
 		return;
 	}
 
@@ -146,7 +151,7 @@ void InstUpdateLRU(int idx, int idc)
 	else
 	{
 		printf("LRU update was required");
-		for(temp_INST_WAY; temp_INST_WAY <= INST_WAY; temp_INST_WAY++)
+		for(int temp_INST_WAY = 1; temp_INST_WAY <= INST_WAY; temp_INST_WAY++)
 		{
 			//change values that are less than currentInstruction
 			if(Inst_Cache[idx][idc].lru < currentInstruction)
@@ -159,6 +164,7 @@ void InstUpdateLRU(int idx, int idc)
 	}
 	//return???
 }
+*/
 
 void InstEvictLRU(int tag_value, int idx)
 {
@@ -166,8 +172,8 @@ void InstEvictLRU(int tag_value, int idx)
 	//if ~[parm1][parm2].LRU == INST_WAY
 		//~.tag = tag (parm2)
 		//call instruction_update_LRU
-	int idc=1;
-	for (idc; idc<INST_WAY; idc++)
+	//int idc=1;
+	for (int idc=1; idc<INST_WAY; idc++)
 	{
 		//check for equivalence between traversed value and testing value
 		if (Inst_Cache[idx][idc].lru == INST_WAY)
@@ -178,7 +184,7 @@ void InstEvictLRU(int tag_value, int idx)
 			InstUpdateLRU(tag_value,idx);
 			return;
 		}
-		printf("ERROR! cant find testing value in the instruction cache. instruction_evect_LRU")
+		printf("ERROR! cant find testing value in the instruction cache. instruction_evect_LRU");
 	}
 
 }
@@ -187,13 +193,13 @@ void InstClear(void)
 {
 	//statistics variables back to zero 
 	//int cache_read = 0, cache_write = 0, cache_hit = 0, cache_miss = 0;
-	int idx = 0, idc = 0; //index
+//	int idx = 0, idc = 0; //index
 	//for loop to change all MESI back to invalid and reset LRU order back to inital order
-	for(idx; idx<SETS; idx++)
+	for(int idx = 0; idx<SETS; idx++)
 	{
-		for(idc; idc<INST_WAY; idc++)
+		for(int idc = 0; idc<INST_WAY; idc++)
 		{
-			Inst_Cache[idx][idc].lru = NULL; //decrement lru values 
+			Inst_Cache[idx][idc].lru = -1; //decrement lru values 
 			Inst_Cache[idx][idc].mesi = 3; //invalid 
 		}
 	}

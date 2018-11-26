@@ -13,7 +13,7 @@
 #include	<stdint.h>
 #include	<math.h>
 #include	<string.h>
-#include	<iostream.h>
+//#include	<iostream>
 
 #define FALSE			0
 #define TRUE			1
