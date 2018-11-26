@@ -77,8 +77,8 @@ void DataClear(void)
 		for(index2 = 0; index2 < DATA_WAY; index2++)
 		{
 			//This line needs to be revised
-			cache_data[index1][index2].lru = NULL; //decrement LRU values
-			cache_data[index1][index2].mesi = 3;	//v	
+			Data_Cache[index1][index2].lru = -1; //decrement LRU values
+			Data_Cache[index1][index2].mesi = I;	//v	
 		}
 	}
 
