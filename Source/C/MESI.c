@@ -6,7 +6,11 @@
 */
 
 #include "MESI.h"
+extern struct cache	Inst_Cache[SETS][INST_WAY], Data_Cache[SETS][DATA_WAY];
 
+/*
+TODO: replace thecache with the appropriate caches
+*/
 int UpdateMESI(int set, int way, int n /* 'n' from trace file */){
 
 	int check;
@@ -41,14 +45,14 @@ int UpdateMESI(int set, int way, int n /* 'n' from trace file */){
 		Data_Cache[SETS][DATA_WAY].mesi = 0;
 		check = 0;
 	}
-	else if((n == 4) && Data_Cache[SETS][DATA_WAY].mesi != 3){
+	else if((n == 4)){
 	//Response to snooping, data request from L2
-		Data_Cache[SETS][DATA_WAY].mesi = 2;
+		Inst_Cache[SETS][INST_WAY].mesi = 2;
 		check = 0;
 	}
 	else if(n == 3){
 	//Invalidate command from L2
-		Data_Cache[SETS][DATA_WAY].mesi = 3;
+		Inst_Cache[SETS][INST_WAY].mesi = 3;
 		check = 0;
 	}
 	else
