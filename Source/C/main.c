@@ -13,7 +13,7 @@
 
 FILE 	*fp;				// file pointer
 char 	*trace_file;		// temporary buffer for trace file name
-char	*trace_buffer[20];	// buffer for reading lines in tracefile
+char	trace_buffer[20];	// buffer for reading lines in tracefile
 char	*token;
 long	buff[2];
 int		mode;				// 1 or 2, decides				
@@ -56,7 +56,7 @@ int main(int argc, char *argv[]){
 	DataClear();
 	
 	//	Read through Trace File line by line
-	while(fgets(trace_buffer, 20, fp) != NULL){
+	while(fgets(trace_buffer, sizeof(trace_buffer), fp) != NULL){
 		
 		i = 0;
 		while ((token = strsep(&trace_buffer, " ")) != NULL){
