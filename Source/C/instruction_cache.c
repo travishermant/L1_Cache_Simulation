@@ -84,7 +84,11 @@ int InstMiss(int tag_value, int idx)
 	{
 		if (Inst_Cache[idx][idc].mesi == I)
 		{
+			// Update MESI here?
 			Inst_Cache[idx][idc].tag = tag_value;
+			Inst_Cache[idx][idc].index = temp_index;
+			Inst_Cache[idx][idc].address = address;
+			Inst_Cache[idx][idc].b_offset = temp_offset;
 			Inst_Cache[idx][idc].mesi = S;
 			InstUpdateLRU(idx,idc);
 		}
