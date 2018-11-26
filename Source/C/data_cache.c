@@ -97,7 +97,7 @@ void DataEvictLRU(int tag_size, int set_index)
 		if(Data_Cache[set_index][index2].lru == DATA_WAY - 1)
 		{	
 		//check which state we are in
-			if(cache_data[set_index][index2].mesi == M)
+			if(Data_Cache[set_index][index2].mesi == M)
 			{
 				Data_Cache[set_index][index2].tag = tag_size;	
 				DataUpdateLRU(tag_size, set_index);
