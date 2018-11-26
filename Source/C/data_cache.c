@@ -18,8 +18,8 @@ extern struct cache	Data_Cache[SETS][DATA_WAY];
 // If there is a hit, then data evict will be called.
 int DataRead(int set_index, int tag_size)
 {
-	//Check For Hit or miss, and eveict if there is neither
-	if(DataHit(set_index, tag_size) == 0 && DataMiss(tag_size, set_index) == 0)
+	//Check For Hit or miss, and evict if there is neither
+	if((DataHit(set_index, tag_size) == FALSE) && (DataMiss(tag_size, set_index) == FALSE))
 	{	
 		DataEvictLRU(tag_size, set_index);
 		return 0;
@@ -33,14 +33,14 @@ int DataHit(int set_index, int tag_size)
 	for(i = 0; i < DATA_WAY; i++)
 	{
 	// Check if the tag bits are equivalent and check if the state is valid
-		if(Data_Cache[set_index][i].mesi != 3 && Data_Cache[set_index][i].TAG == tag_size)
+		if(Data_Cache[set_index][i].mesi != I && Data_Cache[set_index][i].TAG == tag_size)
 		{
 			DataUpdateLRU(set_index, i);
 		}
 		else if (i == DATA_WAY - 1)
-			return 0;
+			return FALSE;
 	}
-	return 2;
+	return TRUE;
 
 
 }
@@ -51,17 +51,17 @@ int DataMiss(int set_index, int tag_size)
 
 	for(i = 0; i < DATA_WAY; i++)
 	{
-		if(Data_Cache[set_index][i].mesi == 3)
+		if(Data_Cache[set_index][i].mesi == I)
 		{
 			//cache_data[set_index][i].ADDRESS = address;
 			Data_Cache[set_index][i].TAG = tag_size;
 			DataUpdateLRU(set_index, i, tag_size);	//lruupdate function still unsure how it works
-			return 1;
+			return TRUE;
 		}
-		if( i == DATA_WAY - 1)
-		return 0;
+		if(i == DATA_WAY - 1)
+			return FALSE;
 	}
-	return 2;
+	return TRUE;
 }
 
 // This function checks the index and way, and clears the
@@ -94,7 +94,7 @@ void DataEvictLRU(int tag_size, int set_index)
 		if(Data_Cache[set_index][index2].lru == DATA_WAY - 1)
 		{	
 		//check which state we are in
-			if(cache_data[set_index][index2].mesi == 0)
+			if(cache_data[set_index][index2].mesi == M)
 			{
 				Data_Cache[set_index][index2].tag = tag_size;	
 				DataUpdateLRU(tag_size, set_index);

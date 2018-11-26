@@ -47,12 +47,12 @@ int InstHit(int tag_value, int idx)
 	{
 		if (Inst_Cache[idx][idc].tag == tag_value)
 		{
-			if (Inst_Cache[idx][idc].mesi != 3)
+			if (Inst_Cache[idx][idc].mesi != I)
 			{
 				InstUpdateLRU(idx, idc);
 				return TRUE; //no idea if any number thats not !=0 works
 			}
-			else if (Inst_Cache[idx][idc].mesi == 3)
+			else if (Inst_Cache[idx][idc].mesi == I)
 			{
 				printf("ERROR! invalid state cannot be hit");
 				return FALSE;
@@ -82,10 +82,10 @@ int InstMiss(int tag_value, int idx)
 	//int idc = 1;
 	for (int idc = 1;idc<=INST_WAY;idc++)
 	{
-		if (Inst_Cache[idx][idc].mesi == 3)
+		if (Inst_Cache[idx][idc].mesi == I)
 		{
 			Inst_Cache[idx][idc].tag = tag_value;
-			Inst_Cache[idx][idc].mesi = 2;
+			Inst_Cache[idx][idc].mesi = S;
 			InstUpdateLRU(idx,idc);
 		}
 		else if (idc==(INST_WAY))
@@ -200,7 +200,7 @@ void InstClear(void)
 		for(int idc = 0; idc<INST_WAY; idc++)
 		{
 			Inst_Cache[idx][idc].lru = -1; //decrement lru values 
-			Inst_Cache[idx][idc].mesi = 3; //invalid 
+			Inst_Cache[idx][idc].mesi = I; //invalid 
 		}
 	}
 }

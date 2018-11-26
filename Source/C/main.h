@@ -53,6 +53,7 @@ void SplitCache();
 struct cache{
 	int mesi;
 	int lru;
+	uint32_t address;
 	uint32_t tag;
 	uint32_t index;
 	uint32_t b_offset;
