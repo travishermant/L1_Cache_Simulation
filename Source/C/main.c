@@ -18,7 +18,7 @@ char	*token;
 long	buff[2];
 int		mode;				// 1 or 2, decides				
 int		n;					// Trace "n" commands
-uint32_t address;
+uint32_t address, temp_tag, temp_index, temp_offset;
 int 	i = 0;
 
 //Stat variables
@@ -83,7 +83,7 @@ int main(int argc, char *argv[]){
 		n = (int)buff[0];
 		address = (uint32_t)buff[1];
 		
-		SplitAddress
+		SplitAddress();
 		
 		switch(n){
 		case L1_READ_DATA:
@@ -126,3 +126,8 @@ int main(int argc, char *argv[]){
 	return;
 }
 
+void SplitAddress(){
+	temp_tag = address >> 20;
+	temp_index  = (address << 12) >> 18;
+	temp_offset = (address << 26) >> 26;
+}
