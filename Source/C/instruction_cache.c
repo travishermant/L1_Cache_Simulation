@@ -89,8 +89,8 @@ int InstMiss(int tag_value, int idx)
 			Inst_Cache[idx][idc].index = temp_index;
 			Inst_Cache[idx][idc].address = address;
 			Inst_Cache[idx][idc].b_offset = temp_offset;
-			Inst_Cache[idx][idc].mesi = S;
-			InstUpdateLRU(idx,idc);
+			UpdateMESI(idx, idx, n);
+			InstUpdateLRU(idx, idc);
 		}
 		else if (idc==(INST_WAY))
 		{
@@ -112,63 +112,14 @@ int InstRead(int tag_value, int idx)
 
 //if instruction_hit !0 and instruction_miss is 0, return 0
 //else, return 1
-	if ((InstHit(tag_value,idx) == FALSE) && (InstMiss(tag_value,idx)) == FALSE)	
-//	if (!(InstHit(int tag_value, int idx) && InstMiss(int tag_value, int idx)))
-	{
-		InstEvictLRU(tag_value,idx);
-		printf("instruction evicted because there wasnt a hit nor a miss. instruction_read");
+	if (InstHit(tag_value,idx) == FALSE){
+		if (InstMiss(tag_value,idx)) == FALSE)	
+			InstEvictLRU(tag_value,idx);
 		return 0;
-	}
-	else
-	{
-		printf("ERROR! InstRead cannot call evict because there was a hit or a miss");
 	}
 	return TRUE;
 }
 
-//LRU.c takes care of this vvv
-//int InstUpdateLRU(int idx,int idc);
-/*
-{
-
-	//get current LRU
-	int currentInstruction = Inst_Cache[idx][idc].lru;
-	//int temp_INST_WAY = 1;
-//check if Inst_Cache[parm1][parm2].LRU == 0
-	//no need to change anything, return 0
-
-// if Inst_Cache[parm1][parm2].LRU != 0
-	// any LRU bit less than the current bit should get decremented/incremented depending on 
-	// 00 for LRU or 11 for LRU
-
-//check to see if instruction is currently the least recently used
-//if so, do nothing
-	if(Inst_Cache[idx][idc].lru == 7)
-	{
-		printf("LRU update was NOT required");
-		return;
-	}
-
-	//if its not
-	// anything less than current, increment
-	// anything less than current, decrement
-	else
-	{
-		printf("LRU update was required");
-		for(int temp_INST_WAY = 1; temp_INST_WAY <= INST_WAY; temp_INST_WAY++)
-		{
-			//change values that are less than currentInstruction
-			if(Inst_Cache[idx][idc].lru < currentInstruction)
-			{
-				//increment value
-				Inst_Cache[idx][idc].lru++;
-			}
-		}
-
-	}
-	//return???
-}
-*/
 
 void InstEvictLRU(int tag_value, int idx)
 {

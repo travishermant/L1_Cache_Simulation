@@ -22,10 +22,10 @@ int DataRead(int set_index, int tag_size)
 	if((DataHit(set_index, tag_size) == FALSE{
 		if(DataMiss(set_index, tag_size) == FALSE))	
 			DataEvictLRU(tag_size, set_index);
-		return 0;
+		return FALSE;
 	}
-		printf("Error. DataRead cannot call evict because there was a hit or a miss");
-		return 1;
+		// printf("Error. DataRead cannot call evict because there was a hit or a miss");
+		return TRUE;
 }
 // This function checks for a hit and takes appropriate action
 int DataHit(int set_index, int tag_size)
