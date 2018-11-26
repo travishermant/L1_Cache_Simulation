@@ -18,12 +18,14 @@ extern struct cache	Data_Cache[SETS][DATA_WAY];
 // If there is a hit, then data evict will be called.
 int DataRead(int set_index, int tag_size)
 {
-	//Check For Hit or miss
-	
-	//evict if no hit or miss
-
-	//Check for eviction
-
+	//Check For Hit or miss, and eveict if there is neither
+	if(DataHit(set_index, tag_size) == 0 && DataMiss(tag_size, set_index) == 0)
+	{	
+		DataEvictLRU(tag_size, set_index);
+		return 0;
+	}
+		printf("Error. DataRead cannot call evict because there was a hit or a miss");
+		return 1;
 }
 // This function checks for a hit and takes appropriate action
 int DataHit(int set_index, int tag_size)
@@ -83,25 +85,28 @@ void DataClear(void)
 }
 
 // The purpose of this function is to evict the LRU.
-void DataEvictLRU(int tag_size, int idx)
+void DataEvictLRU(int tag_size, int set_index)
 {
 
 	int index2 = 1;
 	for(index2; index2 < DATA_WAY; index2++)
 	{
-		if(cache_data[idx][index2].lru == DATA_WAY)
+		if(cache_data[set_index][index2].lru == DATA_WAY)
 		{	
 		//check which state we are in
-//			if(cache_data[idx][index2].mesi == 0)
-//			{
-				cache_data[idx][index2].tag = tag_size;	
+			if(cache_data[set_index][index2].mesi == 0)
+			{
+				cache_data[set_index][index2].tag = tag_size;	
 				DataUpdateLRU(tag_size, idx);
-				return;
-			//	cache_data[idx][index2].b_offset ;
-//			}
+				printf("Write to L2 cache");
+			}
+			else
+			{
+				cache_data[set_index][index2].tag = tag_size;
+				DataUpdateLRU(tag_size, set_index);
+			}
 		}
-		printf ("Error");
-
+		return;
 	}
 
 }
