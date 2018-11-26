@@ -50,9 +50,9 @@
 struct cache{
 	int mesi;
 	int lru;
-	int tag;
-	int index;
-	int b_offset;
+	uint32_t tag;
+	uint32_t index;
+	uint32_t b_offset;
 };
 
 struct stats{
