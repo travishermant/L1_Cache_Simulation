@@ -33,9 +33,9 @@ int DataHit(int set_index, int tag_size)
 	for(i = 0; i < DATA_WAY; i++)
 	{
 	// Check if the tag bits are equivalent and check if the state is valid
-		if(cache_data[set_index][i].mesi != 3 && cache_data[set_index][i].TAG == tag_size)
+		if(Data_Cache[set_index][i].mesi != 3 && Data_Cache[set_index][i].TAG == tag_size)
 		{
-			DataUpdateLRU(set_index, i, cache_data[set_index][i].TAG, cache_data[set_index][i].LRU);
+			DataUpdateLRU(set_index, i, Data_Cache[set_index][i].TAG, Data_Cache[set_index][i].LRU);
 		}
 		else if (i == DATA_WAY - 1)
 			return 0;
@@ -51,11 +51,11 @@ int DataMiss(int set_index, int tag_size)
 
 	for(i = 0; i < DATA_WAY; i++)
 	{
-		if(cache_data[set_index][i].mesi == 3)
+		if(Data_Cache[set_index][i].mesi == 3)
 		{
 			//cache_data[set_index][i].ADDRESS = address;
-			cache_data[set_index][i].TAG = tag_size;
-			DataUpdateLRU(set_index, i, tag_size, cache_data[set_index][i].LRU);	//lruupdate function still unsure how it works
+			Data_Cache[set_index][i].TAG = tag_size;
+			DataUpdateLRU(set_index, i, tag_size, Data_Cache[set_index][i].lru);	//lruupdate function still unsure how it works
 			return 1;
 		}
 		if( i == DATA_WAY - 1)
@@ -91,18 +91,18 @@ void DataEvictLRU(int tag_size, int set_index)
 	int index2 = 1;
 	for(index2; index2 < DATA_WAY; index2++)
 	{
-		if(cache_data[set_index][index2].lru == DATA_WAY)
+		if(Data_Cache[set_index][index2].lru == DATA_WAY)
 		{	
 		//check which state we are in
 			if(cache_data[set_index][index2].mesi == 0)
 			{
-				cache_data[set_index][index2].tag = tag_size;	
+				Data_Cache[set_index][index2].tag = tag_size;	
 				DataUpdateLRU(tag_size, set_index);
 				printf("Write to L2 cache");
 			}
 			else
 			{
-				cache_data[set_index][index2].tag = tag_size;
+				Data_Cache[set_index][index2].tag = tag_size;
 				DataUpdateLRU(tag_size, set_index);
 			}
 		}
