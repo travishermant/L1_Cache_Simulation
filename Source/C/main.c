@@ -76,12 +76,14 @@ int main(int argc, char *argv[]){
 		
 		i = 0;
 		while ((token = strsep(&trace_buffer, " ")) != NULL){
-			buff[i] = strtol (token, NULL, 16);
+			buff[i] = strtol(token, NULL, 16);
 			i++;
 		}
 		
-		n = buff[0];
-		address = buff[1];
+		n = (int)buff[0];
+		address = (uint32_t)buff[1];
+		
+		SplitAddress
 		
 		switch(n){
 		case L1_READ_DATA:
@@ -118,13 +120,9 @@ int main(int argc, char *argv[]){
 	
 		}
 	}
-	
-	
-	
-	
-	
-	
+		
 	
 	fclose(fp);
 	return;
 }
+
