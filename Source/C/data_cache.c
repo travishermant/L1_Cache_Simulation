@@ -35,7 +35,7 @@ int DataHit(int set_index, int tag_size)
 	// Check if the tag bits are equivalent and check if the state is valid
 		if(Data_Cache[set_index][i].mesi != 3 && Data_Cache[set_index][i].TAG == tag_size)
 		{
-			DataUpdateLRU(set_index, i, Data_Cache[set_index][i].TAG, Data_Cache[set_index][i].LRU);
+			DataUpdateLRU(set_index, i);
 		}
 		else if (i == DATA_WAY - 1)
 			return 0;
@@ -55,7 +55,7 @@ int DataMiss(int set_index, int tag_size)
 		{
 			//cache_data[set_index][i].ADDRESS = address;
 			Data_Cache[set_index][i].TAG = tag_size;
-			DataUpdateLRU(set_index, i, tag_size, Data_Cache[set_index][i].lru);	//lruupdate function still unsure how it works
+			DataUpdateLRU(set_index, i, tag_size);	//lruupdate function still unsure how it works
 			return 1;
 		}
 		if( i == DATA_WAY - 1)
