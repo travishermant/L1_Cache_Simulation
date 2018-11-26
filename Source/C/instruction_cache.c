@@ -18,12 +18,16 @@ Cache for direct access by the core processor
 */
 
 //libraries 
+
 #include "instruction_cache.h"
 #include "LRU.h"
 
-extern struct cache Inst_Cache[SETS][INST_WAY];
+//extern 
+struct cache Inst_Cache[SETS][INST_WAY];
 
-extern struct stats Stats_Cache;
+
+//extern
+ struct stats Stats_Cache;
 
 
 
@@ -49,7 +53,7 @@ int InstHit(int tag_value, int idx)
 		{
 			if (Inst_Cache[idx][idc].mesi != 3)
 			{
-				InstUpdateLRU(tag_value, idc);
+				InstUpdateLRU(idx, idc);
 				return TRUE; //no idea if any number thats not !=0 works
 			}
 			else if (Inst_Cache[idx][idc].mesi == 3)
@@ -86,7 +90,7 @@ int InstMiss(int tag_value, int idx)
 		{
 			Inst_Cache[idx][idc].tag = tag_value;
 			Inst_Cache[idx][idc].mesi = 2;
-			InstUpdateLRU(tag_value,idx);
+			InstUpdateLRU(idx,idc);
 		}
 		else if (idc==(INST_WAY))
 		{
@@ -122,7 +126,7 @@ int InstRead(int tag_value, int idx)
 	return TRUE;
 }
 
-//NOT SURE vvv
+//LRU.c takes care of this vvv
 //int InstUpdateLRU(int idx,int idc);
 /*
 {
@@ -181,7 +185,7 @@ void InstEvictLRU(int tag_value, int idx)
 			//set new value
 			Inst_Cache[idx][idc].tag = tag_value;
 			//update LRU order
-			InstUpdateLRU(tag_value,idx);
+			InstUpdateLRU(idx,idc);
 			return;
 		}
 		printf("ERROR! cant find testing value in the instruction cache. instruction_evect_LRU");
@@ -200,7 +204,7 @@ void InstClear(void)
 		for(int idc = 0; idc<INST_WAY; idc++)
 		{
 			Inst_Cache[idx][idc].lru = -1; //decrement lru values 
-			Inst_Cache[idx][idc].mesi = I; //invalid 
+			Inst_Cache[idx][idc].mesi = 3; //invalid 
 		}
 	}
 }

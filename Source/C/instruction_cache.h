@@ -30,8 +30,10 @@ Inst_Cache[SETS][INST_WAY]
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <unistd.h>
 //#include <instruction_cache.h>
 #include "main.h"
+
 //TODO: add function files
 
 //functions
