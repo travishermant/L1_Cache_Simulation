@@ -21,14 +21,10 @@ Cache for direct access by the core processor
 
 #include "instruction_cache.h"
 #include "LRU.h"
-
-//extern 
 struct cache Inst_Cache[SETS][INST_WAY];
 
 
-//extern
- struct stats Stats_Cache;
-
+extern struct stats Stats_Cache;
 
 
 
