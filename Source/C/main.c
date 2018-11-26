@@ -37,7 +37,7 @@ int main(int argc, char *argv[]){
 		return -1;
 	}
 	else if(argc == 3){
-		mode = stoi(argv[1]);
+		mode = atoi(argv[1]);
 		trace_file = argv[2];
 	}
 	else{
@@ -106,7 +106,7 @@ int main(int argc, char *argv[]){
 				PrintStats();
 				break;
 			default:
-				print("Incorrect trace %s\n", trace_buffer);
+				printf("Incorrect trace %s\n", trace_buffer);
 				break;
 	
 	
