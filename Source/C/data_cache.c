@@ -19,8 +19,8 @@ extern struct cache	Data_Cache[SETS][DATA_WAY];
 int DataRead(int set_index, int tag_size)
 {
 	//Check For Hit or miss, and evict if there is neither
-	if((DataHit(set_index, tag_size) == FALSE{
-		if(DataMiss(set_index, tag_size) == FALSE))	
+	if(DataHit(set_index, tag_size) == FALSE){
+		if(DataMiss(set_index, tag_size) == FALSE)	
 			DataEvictLRU(tag_size, set_index);
 		return FALSE;
 	}
