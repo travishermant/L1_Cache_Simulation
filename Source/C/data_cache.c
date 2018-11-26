@@ -54,6 +54,7 @@ int DataMiss(int set_index, int tag_size)
 		if(Data_Cache[set_index][i].mesi == I)
 		{
 			// MESI update?
+			UpdateMESI(set_index, i, n);
 			Data_Cache[set_index][i].address = address;
 			Data_Cache[set_index][i].tag = tag_size;
 			Data_Cache[set_index][i].index = temp_index;
