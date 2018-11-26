@@ -8,9 +8,6 @@
 #include "MESI.h"
 extern struct cache	Inst_Cache[SETS][INST_WAY], Data_Cache[SETS][DATA_WAY];
 
-/*
-TODO: replace thecache with the appropriate caches
-*/
 int UpdateMESI(int set, int way, int n /* 'n' from trace file */){
 
 	int check;
