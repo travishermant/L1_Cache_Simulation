@@ -7,48 +7,48 @@
 
 #include "MESI.h"
 
-int UpdateMESI(int set, int n /* 'n' from trace file */){
+int UpdateMESI(int set, int way, int n /* 'n' from trace file */){
 
 	int check;
 	
-	if((n == 0) && (Data_Cache[SETS][DATA_WAY].mesi == 3)){
+	if((n == 0) && (Data_Cache[set][way].mesi == 3)){
 	//Moving from invalid to exclusive
-		Data_Cache[SETS][DATA_WAY].mesi = 1;
+		Data_Cache[set][way].mesi = 1;
 		check = 0;
 	}
-	else if((n == 0) && (Data_Cache[SETS][DATA_WAY].mesi == 1)){
+	else if((n == 0) && (Data_Cache[set][way].mesi == 1)){
 	//Moving from exclusive to shared, assuming other processor is reading
-		Data_Cache[SETS][DATA_WAY].mesi = 2;
+		Data_Cache[set][way].mesi = 2;
 		check = 0;
 	}
-	else if((n == 0) && (Data_Cache[SETS][DATA_WAY].mesi == 2)){
+	else if((n == 0) && (Data_Cache[set][way].mesi == 2)){
 	//If read command stay in shared state
-		Data_Cache[SETS][DATA_WAY].mesi = 2;
+		Data_Cache[set][way].mesi = 2;
 		check = 0;
 	}
-	else if((n == 1) && (Data_Cache[SETS][DATA_WAY].mesi == 2)){
+	else if((n == 1) && (Data_Cache[set][way].mesi == 2)){
 	//If write command and in shared state go to modified
-		Data_Cache[SETS][DATA_WAY].mesi = 0;
+		Data_Cache[set][way].mesi = 0;
 		check = 0;
 	}
-	else if((n == 1) && (Data_Cache[SETS][DATA_WAY].mesi == 1)){
+	else if((n == 1) && (Data_Cache[set][way].mesi == 1)){
 	//If write command and in the exclusive state go to modified
-		Data_Cache[SETS][DATA_WAY].mesi = 0;
+		Data_Cache[set][way].mesi = 0;
 		check = 0;
 	}
-	else if((n == 0 || n == 1) && (Data_Cache[SETS][DATA_WAY].mesi == 0)){
+	else if((n == 0 || n == 1) && (Data_Cache[set][way].mesi == 0)){
 	//Either read or write command, stay in modified state
-		Data_Cache[SETS][DATA_WAY].mesi = 0;
+		Data_Cache[set][way].mesi = 0;
 		check = 0;
 	}
-	else if((n == 4) && Data_Cache[SETS][DATA_WAY].mesi != 3){
+	else if((n == 4) && Data_Cache[set][way].mesi != 3){
 	//Response to snooping, data request from L2
-		Data_Cache[SETS][DATA_WAY].mesi = 2;
+		Data_Cache[set][way].mesi = 2;
 		check = 0;
 	}
 	else if(n == 3){
 	//Invalidate command from L2
-		Data_Cache[SETS][DATA_WAY].mesi = 3;
+		Data_Cache[set][way].mesi = 3;
 		check = 0;
 	}
 	else
