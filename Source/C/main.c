@@ -74,35 +74,40 @@ int main(int argc, char *argv[]){
 		//int DataRead(int set_index, int tag_size);
 		
 		switch(n){
-		case L1_READ_DATA:
-			// Data Cache Function
-			break;
-		case L1_WRITE_DATA:
-			// Data Cache Function
-			break;
-		case L1_READ_INST:
-			// Inst Cache Function
-			break;
-		case L2_INVALID:
-			// Just a MESI function
-			break;
-		case L2_SNOOP_DATA:
-			// Just a MESI function
-			break;
-		case RESET:
-			// Both cache functions to reset
-			InstClear();
-			DataClear();
-			// Stat function to clear all
-			ClearStats();
-			break;
-		case PRINT:
-			// Stat function to print
-			PrintStats();
-			break;
-		default:
-			print("Incorrect trace %s\n", trace_buffer);
-			break;
+			case L1_READ_DATA:
+				// Data Cache Function
+				DataRead(temp_tag, temp_index);
+				break;
+			case L1_WRITE_DATA:
+				// Data Cache Function
+				DataRead(temp_tag, temp_index);
+				break;
+			case L1_READ_INST:
+				// Inst Cache Function
+				InstRead(temp_tag, temp_index);
+				break;
+			case L2_INVALID:
+				// Just a MESI function
+				UpdateMESI(temp_index, n);
+				break;
+			case L2_SNOOP_DATA:
+				// Just a MESI function
+				UpdateMESI(temp_index, n);
+				break;
+			case RESET:
+				// Both cache functions to reset
+				InstClear();
+				DataClear();
+				// Stat function to clear all
+				ClearStats();
+				break;
+			case PRINT:
+				// Stat function to print
+				PrintStats();
+				break;
+			default:
+				print("Incorrect trace %s\n", trace_buffer);
+				break;
 	
 	
 	
