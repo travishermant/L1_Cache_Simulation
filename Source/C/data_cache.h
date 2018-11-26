@@ -17,11 +17,11 @@ Travis Hermant, Alex Pinzon, Abdullah Barghouti, Ammar Khan
 
 
 //Function declarations
-int read_data(int set_index, int tag_size);	//function for reading the data
-int data_hit_check(int set_index, int tag_size);	//function that checks for data hit
-int data_miss_check(int set_index, int tag_size);	//function that checks for data miss
-void data_clear_cache(void);	//function that clears the data cache
-void data_line_evict_LRU(int set_index, int i);	// function that evicts the LRU
+int DataRead(int set_index, int tag_size);	//function for reading the data
+int DataHit(int set_index, int tag_size);	//function that checks for data hit
+int DataMiss(int set_index, int tag_size);	//function that checks for data miss
+void DataClear(void);	//function that clears the data cache
+void DataEvictLRU(int set_index, int i);	// function that evicts the LRU
 
 
 
