@@ -98,7 +98,7 @@ void DataEvictLRU(int tag_size, int set_index)
 			{
 				Data_Cache[set_index][index2].tag = tag_size;	
 				DataUpdateLRU(tag_size, set_index);
-				printf("Write to L2 cache");
+				printf("Write to L2 cache	<0x%08x>\n", address);
 			}
 			else
 			{
