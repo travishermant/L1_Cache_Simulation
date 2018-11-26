@@ -58,22 +58,6 @@ int main(int argc, char *argv[]){
 	//	Read through Trace File line by line
 	while(fgets(trace_buffer, 20, fp) != NULL){
 		
-		/*
-		n = trace_buffer[0];	// Trace command index
-		
-		//TODO
-		//NEED TO FIND A BETTER WAY OF PULLING ADDRESS OUT
-		i, j = 1;
-		// Find beginning location of address
-		while(trace_buffer[i] == ' '){
-			i++;
-		}
-		// Find ending location of address
-		while(trace_buffer[j+1] != '\n'){
-			j++;
-		}
-		*/
-		
 		i = 0;
 		while ((token = strsep(&trace_buffer, " ")) != NULL){
 			buff[i] = strtol(token, NULL, 16);
@@ -84,6 +68,10 @@ int main(int argc, char *argv[]){
 		address = (uint32_t)buff[1];
 		
 		SplitAddress();
+		
+		//int InstRead(int tag_value, int idx);
+		//int UpdateMESI(int set, int n);
+		//int DataRead(int set_index, int tag_size);
 		
 		switch(n){
 		case L1_READ_DATA:

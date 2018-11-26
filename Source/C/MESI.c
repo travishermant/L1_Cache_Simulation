@@ -7,7 +7,7 @@
 
 #include "MESI.h"
 
-int UpdateMESI(int set, int way, int n /* 'n' from trace file */){
+int UpdateMESI(int set, int n /* 'n' from trace file */){
 
 	int check;
 	
