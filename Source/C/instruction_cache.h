@@ -44,10 +44,8 @@ extern int	mode, n;
 int InstHit(int tag_value, int idx);
 int InstMiss(int tag_value, int idx);
 int InstRead(int tag_value, int idx);
-
-//void InstUpdateLRU(int idx, int idc); LRU FILE TAKES CARE OF THIS
 void InstEvictLRU(int tag_value, int idx);
 void InstClear(void); 
-
+void PrintInstCache(void);
 
 //exclusive, invalid... no mesi state
