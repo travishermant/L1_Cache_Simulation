@@ -10,7 +10,7 @@
 
 extern struct stats Stats_Cache;
 extern struct cache	Data_Cache[SETS][DATA_WAY];
-
+extern int mode;
 
 int DataRead(int set_index, int new_tag){
 	//Check For Hit or miss, and evict if there is neither
@@ -46,6 +46,11 @@ int DataMiss(int set_index, int new_tag){
 			Data_Cache[set_index][i].index = temp_index;
 			Data_Cache[set_index][i].b_offset = temp_offset;
 			DataUpdateLRU(set_index, i);
+			if(mode == 1)
+			{
+				printf( "Read from L2	<0x%08x>\n", address);		
+			}	
+					
 			return TRUE;
 		}
 		if(i == DATA_WAY - 1)
