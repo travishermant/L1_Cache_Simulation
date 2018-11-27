@@ -41,10 +41,10 @@ extern uint32_t address, temp_tag, temp_index, temp_offset;
 extern int	mode, n;	
 
 //functions
-int InstHit(int tag_value, int idx);
-int InstMiss(int tag_value, int idx);
-int InstRead(int tag_value, int idx);
-void InstEvictLRU(int tag_value, int idx);
+int InstHit(int set_index, int new_tag);
+int InstMiss(int set_index, int new_tag);
+int InstRead(int set_index, int new_tag);
+void InstEvictLRU(int set_index, int new_tag);
 void InstClear(void); 
 void PrintInstCache(void);
 

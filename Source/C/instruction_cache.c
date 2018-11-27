@@ -16,23 +16,17 @@ Cache for direct access by the core processor
 #define	I				3
 
 */
-
+//TODO:evect and update LRU check correct parameters 
 //libraries 
 
 #include "instruction_cache.h"
 
 extern struct cache Inst_Cache[SETS][INST_WAY];
-
-
 extern struct stats Stats_Cache;
 
 
-
-
-
-
-
-int InstHit(int tag_value, int idx)
+//int InstHit(int tag_value, int idx)
+int InstHit(int set_index, int new_tag)
 {
 //increment the size of INST_WAY 
 //per increment IF the conetent's struct memeber tag is equal to tag (other value thats passed in) 
@@ -45,14 +39,15 @@ int InstHit(int tag_value, int idx)
 	//int idc=1;
 	for (int idc = 1; idc<INST_WAY; idc++)
 	{
-		if (Inst_Cache[idx][idc].tag == tag_value)
+		if (Inst_Cache[set_index][idc].tag == new_tag)
 		{
-			if (Inst_Cache[idx][idc].mesi != I)
+			if (Inst_Cache[set_index][idc].mesi != I)
 			{
-				InstUpdateLRU(idx, idc);
+				InstUpdateLRU(set_index, idc);
+				Stats_Cache.cache_hit++; //increment hit counter
 				return TRUE; //no idea if any number thats not !=0 works
 			}
-			else if (Inst_Cache[idx][idc].mesi == I)
+			else if (Inst_Cache[set_index][idc].mesi == I)
 			{
 				printf("ERROR! invalid state cannot be hit");
 				return FALSE;
@@ -72,8 +67,11 @@ int InstHit(int tag_value, int idx)
 	return FALSE;
 
 }
-int InstMiss(int tag_value, int idx)
+
+//int InstMiss(int tag_value, int idx)
+int InstMiss(int set_index, int new_tag)
 {
+	Stats_Cache.cache_miss; //increment miss
 //increment the size of INST_WAY 
 //per increment IF the conetent's struct memeber MESI is equal to 3 (invalid)
 //update instructio cache by setting 
@@ -82,15 +80,15 @@ int InstMiss(int tag_value, int idx)
 	//int idc = 1;
 	for (int idc = 1;idc<=INST_WAY;idc++)
 	{
-		if (Inst_Cache[idx][idc].mesi == I)
+		if (Inst_Cache[set_index][idc].mesi == I)
 		{
 			// Update MESI here?
-			Inst_Cache[idx][idc].tag = tag_value;
-			Inst_Cache[idx][idc].index = temp_index;
-			Inst_Cache[idx][idc].address = address;
-			Inst_Cache[idx][idc].b_offset = temp_offset;
-			UpdateMESI(idx, idx, n);
-			InstUpdateLRU(idx, idc);
+			Inst_Cache[set_index][idc].tag = new_tag;
+			Inst_Cache[set_index][idc].index = temp_index;
+			Inst_Cache[set_index][idc].address = address;
+			Inst_Cache[set_index][idc].b_offset = temp_offset;
+			UpdateMESI(set_index, idc, n);
+			InstUpdateLRU(set_index, idc);
 		}
 		else if (idc==(INST_WAY))
 		{
@@ -105,23 +103,26 @@ int InstMiss(int tag_value, int idx)
 	}
 	return FALSE;
 }
-int InstRead(int tag_value, int idx)
+
+//int InstRead(int tag_value, int idx)
+int InstRead(int set_index, int new_tag)
 {	
 //check status or return values of instruction_hit AND instruction_miss are both !0
 //call instruction_evect_LRU and pass it the parameters passed to this function
 
 //if instruction_hit !0 and instruction_miss is 0, return 0
 //else, return 1
-	if (InstHit(tag_value,idx) == FALSE){
-		if (InstMiss(tag_value,idx) == FALSE)	
-			InstEvictLRU(tag_value,idx);
+	if (InstHit(new_tag,set_index) == FALSE){
+		if (InstMiss(new_tag,set_index) == FALSE)	
+			InstEvictLRU(new_tag,set_index);
 		return 0;
 	}
 	return TRUE;
 }
 
 
-void InstEvictLRU(int tag_value, int idx)
+//void InstEvictLRU(int tag_value, int idx)
+void InstEvictLRU(int set_index, new_tag)
 {
 //while parm2 is less than INST_WAY 
 	//if ~[parm1][parm2].LRU == INST_WAY
@@ -131,12 +132,12 @@ void InstEvictLRU(int tag_value, int idx)
 	for (int idc=1; idc<INST_WAY; idc++)
 	{
 		//check for equivalence between traversed value and testing value
-		if (Inst_Cache[idx][idc].lru == INST_WAY - 1)
+		if (Inst_Cache[set_index][idc].lru == INST_WAY - 1)
 		{
 			//set new value
-			Inst_Cache[idx][idc].tag = tag_value;
+			Inst_Cache[set_index][idc].tag = new_tag;
 			//update LRU order
-			InstUpdateLRU(idx,idc);
+			InstUpdateLRU(set_index,idc);
 			return;
 		}
 		printf("ERROR! cant find testing value in the instruction cache. instruction_evect_LRU");
@@ -150,12 +151,12 @@ void InstClear(void)
 	//int cache_read = 0, cache_write = 0, cache_hit = 0, cache_miss = 0;
 //	int idx = 0, idc = 0; //index
 	//for loop to change all MESI back to invalid and reset LRU order back to inital order
-	for(int idx = 0; idx<SETS; idx++)
+	for(int set_index = 0; set_index<SETS; set_index++)
 	{
 		for(int idc = 0; idc<INST_WAY; idc++)
 		{
-			Inst_Cache[idx][idc].lru = -1; //decrement lru values 
-			Inst_Cache[idx][idc].mesi = I; //invalid 
+			Inst_Cache[set_index][idc].lru = -1; //decrement lru values 
+			Inst_Cache[set_index][idc].mesi = I; //invalid 
 		}
 	}
 }
