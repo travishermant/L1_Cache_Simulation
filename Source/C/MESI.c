@@ -17,13 +17,13 @@ int UpdateMESI(int set, int way, int n /* 'n' from trace file */){
 		check = 0;
 	}
 	// Add transition for data eviction for miss
-	else if((n == 0) && (Data_Cache[set][way].mesi == E)) && (miss == TRUE){
+	else if((n == 0) && (Data_Cache[set][way].mesi == E) && (miss == TRUE)){
 	//Moving from exclusive to shared, assuming other processor is reading
 		Data_Cache[set][way].mesi = E;
 		check = 0;
 		miss = FALSE;
 	}
-	else if((n == 0) && (Data_Cache[set][way].mesi == E)) && {miss == FALSE){
+	else if((n == 0) && (Data_Cache[set][way].mesi == E) && (miss == FALSE)){
 	//If read command stay in shared state
 		Data_Cache[set][way].mesi = S;
 		check = 0;
