@@ -11,27 +11,28 @@
 int InstUpdateLRU(int set, int way)  //Use struct cache variables
 {
 	int check = 0;
-	
-	if(Inst_Cache[set][way].lru >= 0 ){
-	// Set way with current tag to MRU
-	// Decrement LRU bits to the right of the MRU
-		Inst_Cache[set][way].lru = 3;
-		while(way != 4){
-			++way;
-			Inst_Cache[set][way].lru = (Inst_Cache[set][way].lru - 1);
+	int temp_way = 0;
+	int prev_lru = 0;
+	if(Inst_Cache[set][way].lru == INST_WAY - 1)
+		Inst_Cache[set][way].lru = INST_WAY - 1;
+	else if(Inst_Cache[set][way].lru >= 0){
+		prev_lru = Inst_Cache[set][way].lru;
+		for(int i = 0; i < INST_WAY; i++){ 
+			if(Inst_Cache[set][i].lru > prev_lru)
+				Inst_Cache[set][i].lru = (Inst_Cache[set][i].lru -1);		
 		}
-	check = 0;
-	}
-	else if(Inst_Cache[set][way].lru == -1){
-	// Initializing the cache, so -1 means empty way
-		Inst_Cache[set][way].lru = way - 1;
+		Inst_Cache[set][way].lru = INST_WAY - 1;
 		check = 0;
 	}
-	else
-		check = 1;
-	
-// Returns 0 if went through successfully
-// Else returns 1
+	else if(Inst_Cache[set][way].lru == -1){
+	// From initialized cache, so -1 means empty way
+		Inst_Cache[set][way].lru = INST_WAY - 1;
+		while(way > 0){
+			--way;
+			Inst_Cache[set][way].lru = (Inst_Cache[set][way].lru - 1);		
+		}
+		check = 0;
+	}
 	
 return check;
 }
@@ -41,15 +42,15 @@ int DataUpdateLRU(int set, int way)  //Use struct cache variables
 	int check = 0;
 	int temp_way = 0;
 	int prev_lru = 0;
-	if(Data_Cache[set][way].lru == 7)
-		Data_Cache[set][way].lru = 7;
+	if(Data_Cache[set][way].lru == DATA_WAY - 1)
+		Data_Cache[set][way].lru = DATA_WAY - 1;
 	else if(Data_Cache[set][way].lru >= 0){
 		prev_lru = Data_Cache[set][way].lru;
-		for(int i = 0; i < 8; i++){ 
+		for(int i = 0; i < DATA_WAY; i++){ 
 			if(Data_Cache[set][i].lru > prev_lru)
 				Data_Cache[set][i].lru = (Data_Cache[set][i].lru -1);		
 		}
-		Data_Cache[set][way].lru = 7;
+		Data_Cache[set][way].lru = DATA_WAY - 1;
 		check = 0;
 	}
 	else if(Data_Cache[set][way].lru == -1){
@@ -57,14 +58,9 @@ int DataUpdateLRU(int set, int way)  //Use struct cache variables
 		Data_Cache[set][way].lru = DATA_WAY - 1;
 		while(way > 0){
 			--way;
-			Data_Cache[set][way].lru = (Data_Cache[set][way].lru - 1);
-				
+			Data_Cache[set][way].lru = (Data_Cache[set][way].lru - 1);	
 		}
 		check = 0;
 	}
-	else	
-// Returns 0 if went through successfully
-// Else returns 1
-	
 return check;
 }
