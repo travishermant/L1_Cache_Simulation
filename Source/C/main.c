@@ -16,7 +16,7 @@ char 	*trace_file;		// temporary buffer for trace file name
 char	trace_buffer[20];	// buffer for reading lines in tracefile
 char	*token;
 long	buff[2];
-int		mode;				// 1 or 2, decides				
+int		mode;				// 0 or 1, decides				
 int		n;					// Trace "n" commands
 uint32_t address, temp_tag, temp_index, temp_offset;
 int 	i = 0;
