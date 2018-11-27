@@ -60,7 +60,7 @@ void DataEvictLRU(int set_index, int new_tag){
 		//check which state we are in
 			if(Data_Cache[set_index][i].mesi == M){
 				Data_Cache[set_index][i].tag = new_tag;	
-				DataUpdateLRU(tag_size, i);
+				DataUpdateLRU(new_tag, i);
 				//printf("Write to L2 cache	<0x%08x>\n", address);
 			}
 			else{
