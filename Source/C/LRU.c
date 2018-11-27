@@ -24,7 +24,7 @@ int InstUpdateLRU(int set, int way)  //Use struct cache variables
 	}
 	else if(Inst_Cache[set][way].lru == -1){
 	// Initializing the cache, so -1 means empty way
-		Inst_Cache[set][way].lru = INST_WAY - 1;
+		Inst_Cache[set][way].lru = way - 1;
 		check = 0;
 	}
 	else
@@ -52,7 +52,7 @@ int DataUpdateLRU(int set, int way)  //Use struct cache variables
 	}
 	else if(Data_Cache[set][way].lru == -1){
 	// Initializing the cache, so NULL means empty way
-		Data_Cache[set][way].lru = DATA_WAY - 1;
+		Data_Cache[set][way].lru = way - 1;
 		check = 0;
 	}
 	else
