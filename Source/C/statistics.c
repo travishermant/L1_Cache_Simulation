@@ -19,10 +19,10 @@ return;
 
 void PrintStats(){
 	float ratio; 
-	int total;
+	float total;
 	
 	total = Stats_Cache.cache_hit + Stats_Cache.cache_miss;
-	ratio = (Stats_Cache.cache_hit / total) * 100; 
+	ratio = Stats_Cache.cache_hit / total * 100; 
 	
 	printf("~~~~~~~~~~~~~ STATISTICS ~~~~~~~~~~~~~\n");
 	printf("Number of cache reads: %d\n", Stats_Cache.cache_read);
