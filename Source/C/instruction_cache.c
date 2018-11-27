@@ -36,6 +36,7 @@ int InstHit(int set_index, int new_tag){
 			if (Inst_Cache[set_index][idc].mesi != I){
 				InstUpdateLRU(set_index, idc);
 				Stats_Cache.cache_hit++; //increment hit counter
+				return FALSE;
 			}
 			else if (Inst_Cache[set_index][idc].mesi == I)
 				return FALSE;

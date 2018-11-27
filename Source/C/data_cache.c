@@ -24,6 +24,7 @@ int DataHit(int set_index, int new_tag){
 		{
 			DataUpdateLRU(set_index, i);
 			Stats_Cache.cache_hit++;
+			return FALSE;
 		}
 		else if (i == DATA_WAY - 1)
 			return FALSE;
