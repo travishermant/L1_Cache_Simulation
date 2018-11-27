@@ -12,54 +12,40 @@ extern struct stats Stats_Cache;
 extern struct cache	Data_Cache[SETS][DATA_WAY];
 
 
-//This function performs three checks,
-// Checks if there is a miss, if there is then the miss will be delt
-// with accordingly.
-// If there is a hit, then data evict will be called.
-int DataRead(int set_index, int tag_size)
-{
+int DataRead(int set_index, int new_tag){
 	//Check For Hit or miss, and evict if there is neither
-	if(DataHit(set_index, tag_size) == FALSE){
-		if(DataMiss(set_index, tag_size) == FALSE)	
-			DataEvictLRU(tag_size, set_index);
+	if(DataHit(set_index, new_tag) == FALSE){
+		if(DataMiss(set_index, new_tag) == FALSE)	
+			DataEvictLRU(set_index, new_tag);
 		return FALSE;
 	}
-		// printf("Error. DataRead cannot call evict because there was a hit or a miss");
-		return TRUE;
+	return TRUE;
 }
-// This function checks for a hit and takes appropriate action
-int DataHit(int set_index, int tag_size)
-{
-	for(int i = 0; i < DATA_WAY; i++)
-	{
-	// Check if the tag bits are equivalent and check if the state is valid
-		if(Data_Cache[set_index][i].mesi != I && Data_Cache[set_index][i].tag == tag_size)
+
+int DataHit(int set_index, int new_tag){
+	for(int i = 0; i < DATA_WAY; i++){
+		if(Data_Cache[set_index][i].mesi != I && Data_Cache[set_index][i].tag == new_tag)
 		{
 			DataUpdateLRU(set_index, i);
+			Stats_Cache.cache_hit++;
 		}
 		else if (i == DATA_WAY - 1)
 			return FALSE;
 	}
 	return TRUE;
-
-
 }
 
 //This function checks for a miss and takes appropriate action
-int DataMiss(int set_index, int tag_size)
-{
-
-	for(int i = 0; i < DATA_WAY; i++)
-	{
-		if(Data_Cache[set_index][i].mesi == I)
-		{
-			// MESI update?
+int DataMiss(int set_index, int new_tag){
+	Stats_Cache.cache_miss++;
+	for(int i = 0; i < DATA_WAY; i++){
+		if(Data_Cache[set_index][i].mesi == I){
 			UpdateMESI(set_index, i, n);
 			Data_Cache[set_index][i].address = address;
-			Data_Cache[set_index][i].tag = tag_size;
+			Data_Cache[set_index][i].tag = new_tag;
 			Data_Cache[set_index][i].index = temp_index;
 			Data_Cache[set_index][i].b_offset = temp_offset;
-			DataUpdateLRU(set_index, i);	//lruupdate function still unsure how it works
+			DataUpdateLRU(set_index, i);
 			return TRUE;
 		}
 		if(i == DATA_WAY - 1)
@@ -68,52 +54,43 @@ int DataMiss(int set_index, int tag_size)
 	return TRUE;
 }
 
-// This function checks the index and way, and clears the
-// content of the cache by resetting LRU to NULL, and setting the MESI bits to invalid (3). 
+void DataEvictLRU(int set_index, int new_tag){
+	for(int i = 0; i < DATA_WAY; i++){
+		if(Data_Cache[set_index][i].lru == DATA_WAY - 1){	
+		//check which state we are in
+			if(Data_Cache[set_index][i].mesi == M){
+				Data_Cache[set_index][i].tag = new_tag;	
+				DataUpdateLRU(tag_size, i);
+				//printf("Write to L2 cache	<0x%08x>\n", address);
+			}
+			else{
+				Data_Cache[set_index][i].tag = new_tag;
+				DataUpdateLRU(set_index, i);
+			}
+			return;
+		}
+	}
+	return;
+}
 
-void DataClear(void)
-{
-	int index1 = 0;	//set index
-	int index2 = 0; //way index
+/*
+	Functions in the Data Cache that aren't part of normal operations
 
-	for(index1 = 0; index1 < SETS; index1++)
+*/
+
+void DataClear(void){
+	for(int index1 = 0; index1 < SETS; index1++)
 	{
-		for(index2 = 0; index2 < DATA_WAY; index2++)
+		for(int index2 = 0; index2 < DATA_WAY; index2++)
 		{
 			//This line needs to be revised
 			Data_Cache[index1][index2].lru = -1; //decrement LRU values
 			Data_Cache[index1][index2].mesi = I;	//v	
 		}
 	}
-
+	return;
 }
 
-// The purpose of this function is to evict the LRU.
-void DataEvictLRU(int tag_size, int set_index)
-{
-
-	int index2 = 1;
-	for(index2; index2 < DATA_WAY; index2++)
-	{
-		if(Data_Cache[set_index][index2].lru == DATA_WAY - 1)
-		{	
-		//check which state we are in
-			if(Data_Cache[set_index][index2].mesi == M)
-			{
-				Data_Cache[set_index][index2].tag = tag_size;	
-				DataUpdateLRU(tag_size, set_index);		//probably wrong
-				//printf("Write to L2 cache	<0x%08x>\n", address);
-			}
-			else
-			{
-				Data_Cache[set_index][index2].tag = tag_size;
-				DataUpdateLRU(tag_size, set_index);
-			}
-		}
-		return;
-	}
-
-}
 
 void PrintDataCache(){
 	for(int index_set = 0; index_set < SETS; index_set++){
@@ -127,4 +104,5 @@ void PrintDataCache(){
 			}
 		}
 	}
+	return;
 }
