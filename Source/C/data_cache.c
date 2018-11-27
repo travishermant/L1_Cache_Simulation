@@ -46,10 +46,7 @@ int DataMiss(int set_index, int new_tag){
 			Data_Cache[set_index][i].b_offset = temp_offset;
 			DataUpdateLRU(set_index, i);
 			if(mode == 1)
-			{
 				printf( "Read from L2	<0x%08x>\n", address);		
-			}	
-					
 			return TRUE;
 		}
 		if(i == DATA_WAY - 1)
