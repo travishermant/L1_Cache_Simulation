@@ -60,7 +60,7 @@ int DataMiss(int set_index, int new_tag){
 
 void DataEvictLRU(int set_index, int new_tag){
 	for(int i = 0; i < DATA_WAY; i++){
-		if(Data_Cache[set_index][i].lru == DATA_WAY - 1){	
+		if(Data_Cache[set_index][i].lru == 0){	
 		//check which state we are in
 			if(Data_Cache[set_index][i].mesi == M){
 				if(mode == 1){

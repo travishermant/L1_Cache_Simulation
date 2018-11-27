@@ -132,7 +132,7 @@ void InstEvictLRU(int set_index, int new_tag)
 	for (int idc=1; idc<INST_WAY; idc++)
 	{
 		//check for equivalence between traversed value and testing value
-		if (Inst_Cache[set_index][idc].lru == INST_WAY - 1)
+		if (Inst_Cache[set_index][idc].lru == 0)
 		{
 			//set new value
 			Inst_Cache[set_index][idc].tag = new_tag;
