@@ -16,10 +16,10 @@ Alex Pinzon
 
 Use make to compile
 
-Run with ./cache <mode #> <input>.txt
+Run with ./cache <mode #> <input.txt>
 
 - Mode 0 runs the simulation and prints contents/stats when a 9 is in trace file
 
 - Mode 1 runs the simulation just like mode 0 but also prints communication with L2 cache
 
-- the <input>.txt file should consist of lines with the n command follwed by a 32 bit hex address "n ABCDEF12"
+- the <input.txt> file should consist of lines with the n command follwed by a 32 bit hex address "n ABCDEF12"
