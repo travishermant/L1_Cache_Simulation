@@ -39,25 +39,30 @@ return check;
 int DataUpdateLRU(int set, int way)  //Use struct cache variables
 {
 	int check = 0;
-	
-	if(Data_Cache[set][way].lru >= 0){
-	// Set way with current tag to MRU
-	// Decrement LRU bits to the right of the MRU
+	int temp_way = 0;
+	int prev_lru = 0;
+	if(Data_Cache[set][way].lru == 7)
 		Data_Cache[set][way].lru = 7;
-		while(way != 8){
-			++way;
-			Data_Cache[set][way].lru = (Data_Cache[set][way].lru - 1);
+	else if(Data_Cache[set][way].lru >= 0){
+		prev_lru = Data_Cache[set][way].lru;
+		for(int i = 0; i < 8; i++){ 
+			if(Data_Cache[set][i].lru > prev_lru)
+				Data_Cache[set][i].lru = (Data_Cache[set][i].lru -1);		
 		}
-	check = 0;
+		Data_Cache[set][way].lru = 7;
+		check = 0;
 	}
 	else if(Data_Cache[set][way].lru == -1){
 	// Initializing the cache, so NULL means empty way
-		Data_Cache[set][way].lru = way - 1;
+		Data_Cache[set][way].lru = DATA_WAY - 1;
+		while(way > 0){
+			--way;
+			Data_Cache[set][way].lru = (Data_Cache[set][way].lru - 1);
+				
+		}
 		check = 0;
 	}
-	else
-		check = 1;
-	
+	else	
 // Returns 0 if went through successfully
 // Else returns 1
 	
