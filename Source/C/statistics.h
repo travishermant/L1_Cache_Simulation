@@ -7,5 +7,7 @@
 
 #include "main.h"
 
+extern struct stats Stats_Cache;
+
 void ClearStats();
 void PrintStats();

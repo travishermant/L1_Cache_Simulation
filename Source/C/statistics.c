@@ -7,8 +7,6 @@
 
 #include "statistics.h"
 
-extern struct stats Stats_Cache;
-
 void ClearStats(){
 	Stats_Cache.cache_read = 0;
 	Stats_Cache.cache_write = 0;
