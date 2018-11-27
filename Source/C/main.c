@@ -10,24 +10,18 @@
 #include "instruction_cache.h"
 #include "data_cache.h"
 
-
 FILE 	*fp;				// file pointer
 char 	*trace_file;		// temporary buffer for trace file name
 char	trace_buffer[20];	// buffer for reading lines in tracefile
-char	*token;
-long	buff[2];
+char	*token;				// Token for splitting the strings
+long	buff[2];			// Buffer for converting from string to long
 int		mode;				// 0 or 1, decides				
 int		n;					// Trace "n" commands
 uint32_t address, temp_tag, temp_index, temp_offset;
 int 	i = 0;
 
-//Stat variables
-//int cache_read, cache_write = 0;
-//int cache_hit, cache_miss = 0;
-//float hit_ratio = 0;
-
+// Initialize the caches
 struct stats	Stats_Cache;
-
 struct cache	Inst_Cache[SETS][INST_WAY], Data_Cache[SETS][DATA_WAY];
 
 int main(int argc, char *argv[]){
@@ -59,14 +53,7 @@ int main(int argc, char *argv[]){
 	while(fgets(trace_buffer, sizeof(trace_buffer), fp) != NULL){
 		
 		i = 0;
-		/*
-		while ((token = strsep(&trace_buffer, " ")) != NULL){
-			buff[i] = strtol(token, NULL, 16);
-			i++;
-		}
-		*/
 		token = strtok(trace_buffer, " ");
-        //puts(token);
         while (token != NULL){
 			buff[i] = (uint32_t) strtol(token, NULL, 16);
 			i++;
@@ -76,10 +63,6 @@ int main(int argc, char *argv[]){
 		address = (uint32_t)buff[1];
 		
 		SplitAddress();
-		
-		//int InstRead(int tag_value, int idx);
-		//int UpdateMESI(int set, int way, int n);
-		//int DataRead(int set_index, int tag_size);
 		
 		switch(n){
 			case L1_READ_DATA:
@@ -122,13 +105,8 @@ int main(int argc, char *argv[]){
 			default:
 				printf("Incorrect trace %s\n", trace_buffer);
 				break;
-	
-	
-	
 		}
-	}
-		
-	
+	}	
 	fclose(fp);
 	return 1;
 }
@@ -137,6 +115,4 @@ void SplitAddress(){
 	temp_tag = address >> 20;
 	temp_index  = (address << 12) >> 18;
 	temp_offset = (address << 26) >> 26;
-	/*printf("tag %ld %lx \n index %ld %lx \n offset %ld %lx \n", 
-	temp_tag, temp_tag, temp_index, temp_index, temp_offset, temp_offset);*/
 }
