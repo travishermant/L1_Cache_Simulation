@@ -19,6 +19,7 @@ int		mode;				// 0 or 1, decides
 int		n;					// Trace "n" commands
 uint32_t address, temp_tag, temp_index, temp_offset;
 int 	i = 0;
+int 	miss = FALSE;		// miss flag for data eviction
 
 // Initialize the caches
 struct stats	Stats_Cache;
