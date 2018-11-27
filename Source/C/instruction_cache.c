@@ -94,6 +94,8 @@ void InstEvictLRU(int set_index, int new_tag)
 		//check for equivalence between traversed value and testing value
 		if (Inst_Cache[set_index][idc].lru == 0)
 		{
+			if(mode == 1)
+				printf("Read from L2    <0x%lx>\n", (long)address);
 			Inst_Cache[set_index][idc].tag = new_tag;
 			Inst_Cache[set_index][idc].index = temp_index;
 			Inst_Cache[set_index][idc].address = address;
@@ -102,17 +104,12 @@ void InstEvictLRU(int set_index, int new_tag)
 			InstUpdateLRU(set_index, idc);
 			return;
 		}
-		printf("ERROR! cant find testing value in the instruction cache. instruction_evect_LRU");
 	}
 
 }
 
 void InstClear(void)
 {
-	//statistics variables back to zero 
-	//int cache_read = 0, cache_write = 0, cache_hit = 0, cache_miss = 0;
-//	int idx = 0, idc = 0; //index
-	//for loop to change all MESI back to invalid and reset LRU order back to inital order
 	for(int set_index = 0; set_index<SETS; set_index++)
 	{
 		for(int idc = 0; idc<INST_WAY; idc++)

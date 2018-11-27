@@ -43,6 +43,8 @@ int UpdateMESI(int set, int way, int n /* 'n' from trace file */){
 	}
 	else if((n == 4) && Data_Cache[set][way].mesi != I){
 	//Response to snooping, data request from L2
+		if((Data_Cache[set][way].mesi == M) && (mode == 1))
+			printf("Return data to L2    <0x%lx>\n", (long)address);
 		Data_Cache[set][way].mesi = S;
 		check = 0;
 	}
