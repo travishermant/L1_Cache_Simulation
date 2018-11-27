@@ -31,14 +31,15 @@ Inst_Cache[SETS][INST_WAY]
 #include <stdlib.h>
 #include <stdint.h>
 #include <unistd.h>
-//#include <instruction_cache.h>
 #include "main.h"
 #include "LRU.h"
 #include "MESI.h"
-//TODO: add function files
 
+// Global variables
 extern uint32_t address, temp_tag, temp_index, temp_offset;
 extern int	mode, n;	
+extern struct cache Inst_Cache[SETS][INST_WAY];
+extern struct stats Stats_Cache;
 
 //functions
 int InstHit(int set_index, int new_tag);
@@ -47,5 +48,3 @@ int InstRead(int set_index, int new_tag);
 void InstEvictLRU(int set_index, int new_tag);
 void InstClear(void); 
 void PrintInstCache(void);
-
-//exclusive, invalid... no mesi state

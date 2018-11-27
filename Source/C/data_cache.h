@@ -16,6 +16,8 @@ Travis Hermant, Alex Pinzon, Abdullah Barghouti, Ammar Khan
 //File Access
 extern uint32_t address, temp_tag, temp_index, temp_offset;
 extern int	mode, n;	
+extern struct stats Stats_Cache;
+extern struct cache	Data_Cache[SETS][DATA_WAY];
 
 //Function declarations
 int DataRead(int set_index, int tag_size);	//function for reading the data

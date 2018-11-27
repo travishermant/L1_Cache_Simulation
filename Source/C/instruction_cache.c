@@ -16,22 +16,11 @@ Cache for direct access by the core processor
 #define	I				3
 
 */
-//TODO:evect and update LRU check correct parameters 
-//libraries 
 
 #include "instruction_cache.h"
 
-extern struct cache Inst_Cache[SETS][INST_WAY];
-extern struct stats Stats_Cache;
-
 //int InstRead(int tag_value, int idx)
-int InstRead(int set_index, int new_tag)
-{	
-//check status or return values of instruction_hit AND instruction_miss are both !0
-//call instruction_evect_LRU and pass it the parameters passed to this function
-
-//if instruction_hit !0 and instruction_miss is 0, return 0
-//else, return 1
+int InstRead(int set_index, int new_tag){	
 	if(InstHit(new_tag,set_index) == FALSE){
 		if(InstMiss(new_tag,set_index) == FALSE)	
 			InstEvictLRU(new_tag,set_index);
@@ -41,26 +30,22 @@ int InstRead(int set_index, int new_tag)
 }
 
 //int InstHit(int tag_value, int idx)
-int InstHit(int set_index, int new_tag)
-{
-	for (int idc = 1; idc<INST_WAY; idc++){
-		if (Inst_Cache[set_index][idc].tag == new_tag){
+int InstHit(int set_index, int new_tag){
+	for(int idc = 1; idc<INST_WAY; idc++){
+		if(Inst_Cache[set_index][idc].tag == new_tag){
 			if (Inst_Cache[set_index][idc].mesi != I){
 				InstUpdateLRU(set_index, idc);
 				Stats_Cache.cache_hit++; //increment hit counter
 			}
-			else if (Inst_Cache[set_index][idc].mesi == I){
-				printf("ERROR! invalid state cannot be hit");
+			else if (Inst_Cache[set_index][idc].mesi == I)
 				return FALSE;
-			}
 		}
 	}
 	return TRUE;
 }
 
 //int InstMiss(int tag_value, int idx)
-int InstMiss(int set_index, int new_tag)
-{
+int InstMiss(int set_index, int new_tag){
 	Stats_Cache.cache_miss++; //increment miss
 	for(int idc = 1;idc<=INST_WAY;idc++){
 		if (Inst_Cache[set_index][idc].mesi == I){
@@ -78,22 +63,10 @@ int InstMiss(int set_index, int new_tag)
 	return TRUE;
 }
 
-
-
-
 //void InstEvictLRU(int tag_value, int idx)
-void InstEvictLRU(int set_index, int new_tag)
-{
-//while parm2 is less than INST_WAY 
-	//if ~[parm1][parm2].LRU == INST_WAY
-		//~.tag = tag (parm2)
-		//call instruction_update_LRU
-	//int idc=1;
-	for (int idc=1; idc<INST_WAY; idc++)
-	{
-		//check for equivalence between traversed value and testing value
-		if (Inst_Cache[set_index][idc].lru == 0)
-		{
+void InstEvictLRU(int set_index, int new_tag){
+	for (int idc=1; idc<INST_WAY; idc++){
+		if (Inst_Cache[set_index][idc].lru == 0){
 			if(mode == 1)
 				printf("Read from L2    <0x%lx>\n", (long)address);
 			Inst_Cache[set_index][idc].tag = new_tag;
@@ -108,12 +81,14 @@ void InstEvictLRU(int set_index, int new_tag)
 
 }
 
-void InstClear(void)
-{
-	for(int set_index = 0; set_index<SETS; set_index++)
-	{
-		for(int idc = 0; idc<INST_WAY; idc++)
-		{
+/*
+	Functions in the Inst Cache that aren't part of normal operations
+
+*/
+
+void InstClear(void){
+	for(int set_index = 0; set_index<SETS; set_index++){
+		for(int idc = 0; idc<INST_WAY; idc++){
 			Inst_Cache[set_index][idc].lru = -1; //decrement lru values 
 			Inst_Cache[set_index][idc].mesi = I; //invalid 
 		}
@@ -122,6 +97,7 @@ void InstClear(void)
 
 
 void PrintInstCache(void){
+	printf("\n~~~~~~~~~~~~~ INST_CACHE ~~~~~~~~~~~~~\n");
 	for(int index_set = 0; index_set < SETS; index_set++){
 		for(int index_line = 0; index_line < INST_WAY; index_line++){
 			if(Inst_Cache[index_set][index_line].mesi != I){
