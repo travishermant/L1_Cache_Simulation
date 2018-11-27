@@ -66,7 +66,7 @@ int main(int argc, char *argv[]){
 		}
 		*/
 		token = strtok(trace_buffer, " ");
-        puts(token);
+        //puts(token);
         while (token != NULL){
 			buff[i] = (uint32_t) strtol(token, NULL, 16);
 			i++;
