@@ -10,7 +10,6 @@
 
 extern struct stats Stats_Cache;
 extern struct cache	Data_Cache[SETS][DATA_WAY];
-extern int mode;
 
 int DataRead(int set_index, int new_tag){
 	//Check For Hit or miss, and evict if there is neither
@@ -64,12 +63,27 @@ void DataEvictLRU(int set_index, int new_tag){
 		if(Data_Cache[set_index][i].lru == DATA_WAY - 1){	
 		//check which state we are in
 			if(Data_Cache[set_index][i].mesi == M){
+				if(mode == 1){
+					printf("Write to L2 cache    <0x%lx>\n", (long)Data_Cache[set_index][i].address);
+					printf("Read for Ownership from L2    <0x%1x>\n", (long)address);
+				}
+				UpdateMESI(set_index, i, n);
+				Data_Cache[set_index][i].address = address;
 				Data_Cache[set_index][i].tag = new_tag;	
+				Data_Cache[set_index][i].index = temp_index;
+				Data_Cache[set_index][i].b_offset = temp_offset;
 				DataUpdateLRU(set_index, i);
-				//printf("Write to L2 cache	<0x%08x>\n", address);
 			}
 			else{
-				Data_Cache[set_index][i].tag = new_tag;
+				if(mode == 1){
+					printf("Write to L2 cache    <0x%lx>\n", (long)Data_Cache[set_index][i].address);
+					printf("Read from L2    <0x%1x>\n", (long)address);
+				}
+				UpdateMESI(set_index, i, n);
+				Data_Cache[set_index][i].address = address;
+				Data_Cache[set_index][i].tag = new_tag;	
+				Data_Cache[set_index][i].index = temp_index;
+				Data_Cache[set_index][i].b_offset = temp_offset;
 				DataUpdateLRU(set_index, i);
 			}
 			return;
