@@ -10,9 +10,9 @@
 extern struct stats Stats_Cache;
 
 void ClearStats(){
-	Stats_Cache.cache_read,
-	Stats_Cache.cache_write,
-	Stats_Cache.cache_hit,
+	Stats_Cache.cache_read = 0;
+	Stats_Cache.cache_write = 0;
+	Stats_Cache.cache_hit = 0;
 	Stats_Cache.cache_miss = 0;
 return;
 }
