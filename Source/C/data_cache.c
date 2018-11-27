@@ -100,7 +100,7 @@ void PrintDataCache(){
 				printf("MESI: %d LRU: %d Address: %lx \n", 
 					Data_Cache[index_set][index_line].mesi,
 					Data_Cache[index_set][index_line].lru,
-					Data_Cache[index_set][index_line].address);
+					(long)Data_Cache[index_set][index_line].address);
 			}
 		}
 	}

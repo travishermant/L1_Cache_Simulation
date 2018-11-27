@@ -170,7 +170,7 @@ void PrintInstCache(void){
 				printf("MESI: %d LRU: %d Address: %lx \n", 
 					Inst_Cache[index_set][index_line].mesi,
 					Inst_Cache[index_set][index_line].lru,
-					Inst_Cache[index_set][index_line].address);
+					(long)Inst_Cache[index_set][index_line].address);
 			}
 		}
 	}	
