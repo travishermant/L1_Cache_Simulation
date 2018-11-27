@@ -23,6 +23,6 @@ int DataHit(int set_index, int tag_size);	//function that checks for data hit
 int DataMiss(int set_index, int tag_size);	//function that checks for data miss
 void DataClear(void);	//function that clears the data cache
 void DataEvictLRU(int set_index, int i);	// function that evicts the LRU
-
+void PrintDataCache();
 
 

@@ -161,9 +161,16 @@ void InstClear(void)
 }
 
 
-
-//exclusive, invalid, shared ... no modified state
-
-
-
-//~~~~~~~~ CACHE CLEAR FUNCTION NEEDED
+void PrintInstCache(void){
+	for(int index_set = 0; index_set < SETS; index_set++){
+		for(int index_line = 0; index_line < INST_WAY; index_line++){
+			if(Inst_Cache[index_set][index_line].mesi != I){
+				printf("-----\n");
+				printf("MESI: %d LRU: %d Address: %lx \n", 
+					Inst_Cache[index_set][index_line].mesi,
+					Inst_Cache[index_set][index_line].lru,
+					Inst_Cache[index_set][index_line].address);
+			}
+		}
+	}	
+}	

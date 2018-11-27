@@ -32,3 +32,4 @@ void PrintStats(){
 	printf("Hit ratio percentage: %.2f %% \n", ratio);
 return;	
 }	
+

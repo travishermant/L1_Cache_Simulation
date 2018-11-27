@@ -102,7 +102,7 @@ void DataEvictLRU(int tag_size, int set_index)
 			{
 				Data_Cache[set_index][index2].tag = tag_size;	
 				DataUpdateLRU(tag_size, set_index);		//probably wrong
-				printf("Write to L2 cache	<0x%08x>\n", address);
+				//printf("Write to L2 cache	<0x%08x>\n", address);
 			}
 			else
 			{
@@ -115,3 +115,16 @@ void DataEvictLRU(int tag_size, int set_index)
 
 }
 
+void PrintDataCache(){
+	for(int index_set = 0; index_set < SETS; index_set++){
+		for(int index_line = 0; index_line < DATA_WAY; index_line++){
+			if(Data_Cache[index_set][index_line].mesi != I){
+				printf("-----\n");
+				printf("MESI: %d LRU: %d Address: %lx \n", 
+					Data_Cache[index_set][index_line].mesi,
+					Data_Cache[index_set][index_line].lru,
+					Data_Cache[index_set][index_line].address);
+			}
+		}
+	}
+}
