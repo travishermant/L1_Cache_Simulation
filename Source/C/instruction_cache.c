@@ -71,7 +71,7 @@ int InstHit(int set_index, int new_tag)
 //int InstMiss(int tag_value, int idx)
 int InstMiss(int set_index, int new_tag)
 {
-	Stats_Cache.cache_miss; //increment miss
+	Stats_Cache.cache_miss++; //increment miss
 //increment the size of INST_WAY 
 //per increment IF the conetent's struct memeber MESI is equal to 3 (invalid)
 //update instructio cache by setting 
@@ -122,7 +122,7 @@ int InstRead(int set_index, int new_tag)
 
 
 //void InstEvictLRU(int tag_value, int idx)
-void InstEvictLRU(int set_index, new_tag)
+void InstEvictLRU(int set_index, int new_tag)
 {
 //while parm2 is less than INST_WAY 
 	//if ~[parm1][parm2].LRU == INST_WAY
