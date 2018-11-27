@@ -106,12 +106,15 @@ int main(int argc, char *argv[]){
 				// Both cache functions to reset
 				InstClear();
 				DataClear();
-				// Stat function to clear all
+				// Stat function to clear all stats
 				ClearStats();
 				break;
 			case PRINT:
 				// Stat function to print
 				PrintStats();
+				// Printing the contents of all valid cache entries
+				PrintInstCache();
+				PrintDataCache();
 				break;
 			default:
 				printf("Incorrect trace %s\n", trace_buffer);
