@@ -8,8 +8,10 @@
 
 #include "data_cache.h"
 
+//	This function handles the flow for the data cache
+// 	If the data isn't hit, it will then go to see if there is an empty way to fill
+//	If there's no empty way, it will then evict the LRU
 int DataRead(int set_index, int new_tag){
-	//Check For Hit or miss, and evict if there is neither
 	if(DataHit(set_index, new_tag) == FALSE){
 		if(DataMiss(set_index, new_tag) == FALSE)	
 			DataEvictLRU(set_index, new_tag);
@@ -18,6 +20,7 @@ int DataRead(int set_index, int new_tag){
 	return TRUE;
 }
 
+//  Checking if the tag is present in the set, and updating the MESI and LRU if it's needed
 int DataHit(int set_index, int new_tag){
 	for(int i = 0; i < DATA_WAY; i++){
 		if((Data_Cache[set_index][i].mesi != I) && (Data_Cache[set_index][i].tag == new_tag)){
@@ -33,7 +36,7 @@ int DataHit(int set_index, int new_tag){
 	return TRUE;
 }
 
-//This function checks for a miss and takes appropriate action
+//  If DataHit doesnt find it, then this function will check for an empty way and fill the data in there
 int DataMiss(int set_index, int new_tag){
 	Stats_Cache.cache_miss++;
 	for(int i = 0; i < DATA_WAY; i++){
@@ -54,18 +57,20 @@ int DataMiss(int set_index, int new_tag){
 	return TRUE;
 }
 
+//  If there are no empty ways found in DataMiss, then evict the way that is LRU
+//  If data is modified, then write to L2 cache and read for ownership, otherwise just read from L2
 void DataEvictLRU(int set_index, int new_tag){
 	miss = TRUE;
 	for(int i = 0; i < DATA_WAY; i++){
 		if(Data_Cache[set_index][i].lru == 0){	
 		//check which state we are in
 			if(mode == 1){
-				if(Data_Cache[set_index][i].mesi == M){
+				if((Data_Cache[set_index][i].mesi == M) && (n != 1){
 					printf("Write to L2 cache    <0x%lx>\n", (long)Data_Cache[set_index][i].address);
+				else if((Data_Cache[set_index][i].mesi == M) && (n == 1)
 					printf("Read for Ownership from L2    <0x%lx>\n", (long)address);
 				}
 				else{
-					//printf("Write to L2 cache    <0x%lx>\n", (long)Data_Cache[set_index][i].address);
 					printf("Read from L2    <0x%lx>\n", (long)address);
 				}
 			}
@@ -86,6 +91,7 @@ void DataEvictLRU(int set_index, int new_tag){
 
 */
 
+// Clears the entire data cache, changes MESI to I, and LRU to -1
 void DataClear(void){
 	for(int index1 = 0; index1 < SETS; index1++){
 		for(int index2 = 0; index2 < DATA_WAY; index2++){
@@ -96,7 +102,7 @@ void DataClear(void){
 	return;
 }
 
-
+// Prints all the contents of the data cache, provided that they are not Invalid
 void PrintDataCache(){
 	printf("\n~~~~~~~~~~~~~ DATA_CACHE ~~~~~~~~~~~~~\n");
 	for(int index_set = 0; index_set < SETS; index_set++){

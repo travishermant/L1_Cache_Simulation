@@ -21,7 +21,7 @@ Cache for direct access by the core processor
 #include "instruction_cache.h"
 
 //	This function handles the flow for the instruction cache
-// 	If the instruction isn't hit, it will then go to see if there is an empty way to fillellipse
+// 	If the instruction isn't hit, it will then go to see if there is an empty way to fill
 //	If there's no empty way, it will then evict the LRU
 int InstRead(int set_index, int new_tag){	
 	if(InstHit(set_index, new_tag) == FALSE){
@@ -47,7 +47,7 @@ int InstHit(int set_index, int new_tag){
 	return TRUE;
 }
 
-//  If InstHit doesnt find it, then this function will check for an empty way and fill the data in there
+//  If InstHit doesnt find it, then this function will check for an empty way and fill the instruction in there
 int InstMiss(int set_index, int new_tag){
 	Stats_Cache.cache_miss++; //increment miss
 	for(int idc = 0; idc < INST_WAY; idc++){
