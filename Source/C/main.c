@@ -79,7 +79,7 @@ int main(int argc, char *argv[]){
 			case L1_READ_INST:
 				// Inst Cache Function
 				Stats_Cache.cache_read++;
-				InstRead(temp_tag, temp_index);
+				InstRead(temp_index, temp_tag);
 				break;
 			case L2_INVALID:
 				// Just a MESI function
