@@ -65,7 +65,7 @@ void DataEvictLRU(int set_index, int new_tag){
 					printf("Read for Ownership from L2    <0x%lx>\n", (long)address);
 				}
 				else{
-					printf("Write to L2 cache    <0x%lx>\n", (long)Data_Cache[set_index][i].address);
+					//printf("Write to L2 cache    <0x%lx>\n", (long)Data_Cache[set_index][i].address);
 					printf("Read from L2    <0x%lx>\n", (long)address);
 				}
 			}

@@ -6,6 +6,7 @@
 */
 
 #include "main.h"
+#include "lru.h"
 
 extern struct cache	Inst_Cache[SETS][INST_WAY], Data_Cache[SETS][DATA_WAY];
 extern int	mode, miss;

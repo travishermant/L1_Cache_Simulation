@@ -44,11 +44,18 @@ int UpdateMESI(int set, int way, int n /* 'n' from trace file */){
 		Data_Cache[set][way].mesi = M;
 		check = 0;
 	}
-	else if((n == 4) && Data_Cache[set][way].mesi != I){
+	else if(n == 4){
 	//Response to snooping, data request from L2
-		if((Data_Cache[set][way].mesi == M) && (mode == 1))
-			printf("Return data to L2    <0x%lx>\n", (long)address);
-		Data_Cache[set][way].mesi = S;
+		while(way < 8){
+			if(Data_Cache[set][way].tag == temp_tag){
+				if((Data_Cache[set][way].mesi == M) && (mode == 1))
+					printf("Return data to L2    <0x%lx>\n", (long)address);
+				Data_Cache[set][way].mesi = I;
+				Data_UpdateLRU(set,way);
+				return 0;
+			}
+			way++;
+		}
 		check = 0;
 	}
 	else if(n == 3){
