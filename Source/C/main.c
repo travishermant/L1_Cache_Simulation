@@ -7,13 +7,13 @@
 		and make the appropriate modifications.
 		
         runtime  ---    Main.c   --- input.txt
-					/			 \
-			       /              \
-			Inst_Cache		     Data_Cache
+                    /            \
+                   /              \
+           Inst_Cache             Data_Cache
            / 	|	 \           /    |     \
-		MESI    |   LRU        MESI   |     LRU
- 		        | 					  |	
-			  Stats                 Stats
+        MESI    |    LRU       MESI   |     LRU
+                | 					  |	
+              Stats                 Stats
 		
 */
 
