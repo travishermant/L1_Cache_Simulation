@@ -67,12 +67,13 @@ void DataEvictLRU(int set_index, int new_tag){
 			if(mode == 1){
 				if((Data_Cache[set_index][i].mesi == M) && (n != 1){
 					printf("Write to L2 cache    <0x%lx>\n", (long)Data_Cache[set_index][i].address);
-				else if((Data_Cache[set_index][i].mesi == M) && (n == 1)
-					printf("Read for Ownership from L2    <0x%lx>\n", (long)address);
-				}
 				else{
 					printf("Read from L2    <0x%lx>\n", (long)address);
 				}
+				if(n == 1)
+					printf("Read for Ownership from L2    <0x%lx>\n", (long)address);
+				}
+				
 			}
 			UpdateMESI(set_index, i, n);
 			Data_Cache[set_index][i].address = address;
