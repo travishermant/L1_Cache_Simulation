@@ -108,9 +108,9 @@ void PrintInstCache(void){
 				printf("SET: %lx WAY: %d MESI: %d LRU: %d ADDRESS: %lx \n", 
 					(long)Inst_Cache[index_set][index_line].index,
 					index_line,
-					(long)Inst_Cache[index_set][index_line].address,
 					Inst_Cache[index_set][index_line].mesi,
-					Inst_Cache[index_set][index_line].lru);
+					Inst_Cache[index_set][index_line].lru,
+					(long)Inst_Cache[index_set][index_line].address);
 			}
 		}
 	}	
