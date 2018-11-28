@@ -58,6 +58,8 @@ int InstMiss(int set_index, int new_tag){
 			Inst_Cache[set_index][idc].address = address;
 			Inst_Cache[set_index][idc].b_offset = temp_offset;
 			InstUpdateLRU(set_index, idc);
+			if(mode == 1)
+				printf("Read from L2    <0x%lx>\n", (long)address);
 			return TRUE;
 		}
 		if(idc == INST_WAY -1)
