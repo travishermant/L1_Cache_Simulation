@@ -61,7 +61,7 @@ int UpdateMESI(int set, int way, int n /* 'n' from trace file */){
 	else if(n == 3){
 	//Invalidate command from L2
 		while(way < 8){
-			if(Data_Cache[set][way].tag == temp_tag){
+			if((Data_Cache[set][way].tag == temp_tag) && (Data_Cache[set][way].mesi != M)){
 				Data_Cache[set][way].mesi = I;
 				DataUpdateLRU(set,way);
 				return 0;

@@ -103,10 +103,13 @@ void PrintDataCache(){
 		for(int index_line = 0; index_line < DATA_WAY; index_line++){
 			if(Data_Cache[index_set][index_line].mesi != I){
 				printf("-----\n");
-				printf("MESI: %d LRU: %d Address: %lx \n", 
+				printf("MESI: %d LRU: %d Address: %lx Set: %lx Way: %d\n", 
 					Data_Cache[index_set][index_line].mesi,
 					Data_Cache[index_set][index_line].lru,
-					(long)Data_Cache[index_set][index_line].address);
+					(long)Data_Cache[index_set][index_line].address,
+					(long)Data_Cache[index_set][index_line].index,
+					index_line);
+					
 			}
 		}
 	}

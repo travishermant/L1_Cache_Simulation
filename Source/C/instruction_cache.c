@@ -102,10 +102,12 @@ void PrintInstCache(void){
 		for(int index_line = 0; index_line < INST_WAY; index_line++){
 			if(Inst_Cache[index_set][index_line].mesi != I){
 				printf("-----\n");
-				printf("MESI: %d LRU: %d Address: %lx \n", 
+				printf("MESI: %d LRU: %d Address: %lx Set: %lx Way: %d\n", 
 					Inst_Cache[index_set][index_line].mesi,
 					Inst_Cache[index_set][index_line].lru,
-					(long)Inst_Cache[index_set][index_line].address);
+					(long)Inst_Cache[index_set][index_line].address,
+					(long)Inst_Cache[index_set][index_line].index,
+					index_line);
 			}
 		}
 	}	
