@@ -1,8 +1,20 @@
 /*
 	ECE 485
 	Travis Hermant, Alex Pinzon, Abdullah Barghouti, Ammar Khan
-
-
+	This is the top level for the program, it will take in runtime commands for mode and input file, and then parse through the files
+		line by line. It separates the command from the address, and divides the address into its appropriate conventions as decimal numbers
+		Those decimal numbers are stored as global temp uint32_t's, and then functions are called in the caches to check for htis and misses
+		and make the appropriate modifications.
+		
+        runtime  ---    Main.c   --- input.txt
+					/			 \
+			       /              \
+			Inst_Cache		     Data_Cache
+           / 	|	 \           /    |     \
+		MESI    |   LRU        MESI   |     LRU
+ 		        | 					  |	
+			  Stats                 Stats
+		
 */
 
 #include "main.h"
@@ -22,7 +34,9 @@ int 	i = 0;
 int 	miss = FALSE;		// miss flag for data eviction
 
 // Initialize the caches
+// Stats Cache just stores various statistics to be called and printed at the end
 struct stats	Stats_Cache;
+// Both Inst_Cache and Data_Cache are set to be 2D arrays, with the same number of ways (16K) and 4 ways/8 ways per set, respectively
 struct cache	Inst_Cache[SETS][INST_WAY], Data_Cache[SETS][DATA_WAY];
 
 int main(int argc, char *argv[]){
@@ -46,13 +60,13 @@ int main(int argc, char *argv[]){
 		printf("Opening file failed, quitting...\n");
 		return -1;
 	}
-	//	Initialize caches
+	//	Initialize caches; set all MESI to I, set all LRU to -1 
 	InstClear();
 	DataClear();
 	
-	//	Read through Trace File line by line
+	//	Read through Trace File line by line, until there's nothing left
 	while(fgets(trace_buffer, sizeof(trace_buffer), fp) != NULL){
-		
+		// Each line is a space " " separated string, so separate the string for each chunk
 		i = 0;
 		token = strtok(trace_buffer, " ");
         while (token != NULL){
@@ -60,33 +74,34 @@ int main(int argc, char *argv[]){
 			i++;
 			token = strtok(NULL, " ");
 		}
+		// Store the separated chunks (tokens/whatever) into global variables
 		n = (int)buff[0];
 		address = (uint32_t)buff[1];
 		
 		SplitAddress();
 		
+		// n refers to the command found in the tracefile, check main.h for the defines and given description
 		switch(n){
 			case L1_READ_DATA:
-				// Data Cache Function
 				Stats_Cache.cache_read++;
 				DataRead(temp_index, temp_tag);
 				break;
 			case L1_WRITE_DATA:
-				// Data Cache Function
+				// Call to write data, checking to see if it's held
 				Stats_Cache.cache_write++;
 				DataRead(temp_index, temp_tag);
 				break;
 			case L1_READ_INST:
-				// Inst Cache Function
+				// Call for the instruction cache to read an instruction
 				Stats_Cache.cache_read++;
 				InstRead(temp_index, temp_tag);
 				break;
 			case L2_INVALID:
-				// Just a MESI function
+				// Occurs after a snoop, L2 sends a command to invalidate once other processor receives data
 				UpdateMESI(temp_index, 0, n);
 				break;
 			case L2_SNOOP_DATA:
-				// Just a MESI function
+				// L2 is checking to see if L1 has other data that a different processor is looking for
 				UpdateMESI(temp_index, 0, n);
 				break;
 			case RESET:
@@ -99,11 +114,12 @@ int main(int argc, char *argv[]){
 			case PRINT:
 				// Stat function to print
 				PrintStats();
-				// Printing the contents of all valid cache entries
+				// Printing the contents of all valid (MESI != I) cache entries
 				PrintInstCache();
 				PrintDataCache();
 				break;
 			default:
+				// Command was not 0,1,2,3,4,8,9
 				printf("Incorrect trace %s\n", trace_buffer);
 				break;
 		}
@@ -112,6 +128,9 @@ int main(int argc, char *argv[]){
 	return 1;
 }
 
+//		Address can be left and right shifted corresponding to the number of bits to isolate that area
+//		[               Address 32-bits                   ]
+//		[ Tag 12-bits | Index 14-bits | Byte Offset 6-bits]
 void SplitAddress(){
 	temp_tag = address >> 20;
 	temp_index  = (address << 12) >> 18;

@@ -29,12 +29,22 @@ int UpdateMESI(int set, int way, int n /* 'n' from trace file */){
 		check = 0;
 		miss = FALSE;
 	}
+	if((n == 0) && (Data_Cache[set][way].mesi == S)){
+	//Moving from invalid to exclusive
+		Data_Cache[set][way].mesi = S;
+		check = 0;
+	}
 	else if((n == 1) && (Data_Cache[set][way].mesi == S)){
 	//If write command and in shared state go to modified
 		Data_Cache[set][way].mesi = M;
 		check = 0;
 	}
 	else if((n == 1) && (Data_Cache[set][way].mesi == E)){
+	//If write command and in the exclusive state go to modified
+		Data_Cache[set][way].mesi = M;
+		check = 0;
+	}
+	else if((n == 1) && (Data_Cache[set][way].mesi == I)){
 	//If write command and in the exclusive state go to modified
 		Data_Cache[set][way].mesi = M;
 		check = 0;
