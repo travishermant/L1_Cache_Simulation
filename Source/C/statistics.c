@@ -24,7 +24,7 @@ void PrintStats(){
 	
 	printf("\n~~~~~~~~~~~~~ STATISTICS ~~~~~~~~~~~~~\n");
 	printf("Number of cache reads: %d\n", Stats_Cache.cache_read);
-	printf("Number of cache wrties: %d\n", Stats_Cache.cache_write);
+	printf("Number of cache writes: %d\n", Stats_Cache.cache_write);
 	printf("Number of cache hits: %d\n", Stats_Cache.cache_hit);
 	printf("Number of cache misses: %d\n", Stats_Cache.cache_miss);
 	printf("Hit ratio percentage: %.2f %% \n", ratio);
