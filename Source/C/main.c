@@ -12,7 +12,7 @@
            Inst_Cache             Data_Cache
            /    |    \           /    |     \
         MESI    |    LRU       MESI   |     LRU
-                | 					  |	
+                |                     |	
               Stats                 Stats
 		
 */
