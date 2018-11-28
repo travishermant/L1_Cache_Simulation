@@ -65,7 +65,7 @@ int InstMiss(int set_index, int new_tag){
 
 //void InstEvictLRU(int tag_value, int idx)
 void InstEvictLRU(int set_index, int new_tag){
-	for (int idc=1; idc<INST_WAY; idc++){
+	for (int idc= 0; idc<INST_WAY; idc++){
 		if (Inst_Cache[set_index][idc].lru == 0){
 			if(mode == 1)
 				printf("Read from L2    <0x%lx>\n", (long)address);
