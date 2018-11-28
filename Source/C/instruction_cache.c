@@ -21,9 +21,9 @@ Cache for direct access by the core processor
 
 //int InstRead(int tag_value, int idx)
 int InstRead(int set_index, int new_tag){	
-	if(InstHit(new_tag,set_index) == FALSE){
-		if(InstMiss(new_tag,set_index) == FALSE)	
-			InstEvictLRU(new_tag,set_index);
+	if(InstHit(set_index, new_tag) == FALSE){
+		if(InstMiss(set_index, new_tag) == FALSE)	
+			InstEvictLRU(set_index, new_tag);
 		return FALSE;
 	}
 	return TRUE;
@@ -32,16 +32,15 @@ int InstRead(int set_index, int new_tag){
 //int InstHit(int tag_value, int idx)
 int InstHit(int set_index, int new_tag){
 	for(int idc = 0; idc < INST_WAY; idc++){
-		if(Inst_Cache[set_index][idc].tag == new_tag){
-			if (Inst_Cache[set_index][idc].mesi != I){
+		if((Inst_Cache[set_index][idc].tag == new_tag) && (Inst_Cache[set_index][idc].mesi != I)){
+				UpdateMESI(set_index, idc, n);
 				InstUpdateLRU(set_index, idc);
 				Stats_Cache.cache_hit++; //increment hit counter
 				return TRUE;
 			}
-			else if (Inst_Cache[set_index][idc].mesi == I)
+		else if (idc == INST_WAY - 1)
 				return FALSE;
 		}
-	}
 	return TRUE;
 }
 
