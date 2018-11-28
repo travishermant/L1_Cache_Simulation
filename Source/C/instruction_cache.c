@@ -32,7 +32,7 @@ int InstRead(int set_index, int new_tag){
 	return TRUE;
 }
 
-//int InstHit(int tag_value, int idx)
+//  Checking if the tag is present in the set, and updating the MESI and LRU if it's needed
 int InstHit(int set_index, int new_tag){
 	for(int idc = 0; idc < INST_WAY; idc++){
 		if((Inst_Cache[set_index][idc].tag == new_tag) && (Inst_Cache[set_index][idc].mesi != I)){
@@ -47,7 +47,7 @@ int InstHit(int set_index, int new_tag){
 	return TRUE;
 }
 
-//int InstMiss(int tag_value, int idx)
+//  If InstHit doesnt find it, then this function will check for an empty way and fill the data in there
 int InstMiss(int set_index, int new_tag){
 	Stats_Cache.cache_miss++; //increment miss
 	for(int idc = 0; idc < INST_WAY; idc++){
@@ -68,7 +68,7 @@ int InstMiss(int set_index, int new_tag){
 	return TRUE;
 }
 
-//void InstEvictLRU(int tag_value, int idx)
+//  If there are no empty ways found in InstMiss, then evict the way that is LRU
 void InstEvictLRU(int set_index, int new_tag){
 	for (int idc= 0; idc<INST_WAY; idc++){
 		if (Inst_Cache[set_index][idc].lru == 0){
@@ -91,6 +91,7 @@ void InstEvictLRU(int set_index, int new_tag){
 
 */
 
+// Clears the entire instruction cache, changes MESI to I, and LRU to -1
 void InstClear(void){
 	for(int set_index = 0; set_index<SETS; set_index++){
 		for(int idc = 0; idc<INST_WAY; idc++){
@@ -100,7 +101,7 @@ void InstClear(void){
 	}
 }
 
-
+// Prints all the contents of the instruction cache, provided that they are not Invalid
 void PrintInstCache(void){
 	printf("\n~~~~~~~~~~~~~ INST_CACHE ~~~~~~~~~~~~~\n");
 	for(int index_set = 0; index_set < SETS; index_set++){
