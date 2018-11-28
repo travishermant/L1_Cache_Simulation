@@ -7,7 +7,8 @@ and the processor.
 -When code executes, instruction sets are copied into the Instruction 
 Cache for direct access by the core processor
 -instruction cache doesnt write 
-
+- Way 4
+- LRU is 2 bit, 0-3
 
 //MESI
 #define	M				0
@@ -19,7 +20,9 @@ Cache for direct access by the core processor
 
 #include "instruction_cache.h"
 
-//int InstRead(int tag_value, int idx)
+//	This function handles the flow for the instruction cache
+// 	If the instruction isn't hit, it will then go to see if there is an empty way to fillellipse
+//	If there's no empty way, it will then evict the LRU
 int InstRead(int set_index, int new_tag){	
 	if(InstHit(set_index, new_tag) == FALSE){
 		if(InstMiss(set_index, new_tag) == FALSE)	
@@ -102,12 +105,12 @@ void PrintInstCache(void){
 		for(int index_line = 0; index_line < INST_WAY; index_line++){
 			if(Inst_Cache[index_set][index_line].mesi != I){
 				printf("-----\n");
-				printf("MESI: %d LRU: %d Address: %lx Set: %lx Way: %d\n", 
-					Inst_Cache[index_set][index_line].mesi,
-					Inst_Cache[index_set][index_line].lru,
-					(long)Inst_Cache[index_set][index_line].address,
+				printf("SET: %lx WAY: %d MESI: %d LRU: %d ADDRESS: %lx \n", 
 					(long)Inst_Cache[index_set][index_line].index,
-					index_line);
+					index_line,
+					(long)Inst_Cache[index_set][index_line].address,
+					Inst_Cache[index_set][index_line].mesi,
+					Inst_Cache[index_set][index_line].lru);
 			}
 		}
 	}	
