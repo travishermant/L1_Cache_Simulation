@@ -10,6 +10,6 @@
 
 extern struct cache	Inst_Cache[SETS][INST_WAY], Data_Cache[SETS][DATA_WAY];
 extern int	mode, miss;
-extern uint32_t address;
+extern uint32_t address, temp_tag;
 
 int UpdateMESI(int set, int way, int n);
