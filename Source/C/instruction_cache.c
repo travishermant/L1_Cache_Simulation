@@ -31,7 +31,7 @@ int InstRead(int set_index, int new_tag){
 
 //int InstHit(int tag_value, int idx)
 int InstHit(int set_index, int new_tag){
-	for(int idc = 1; idc<INST_WAY; idc++){
+	for(int idc = 0; idc < INST_WAY; idc++){
 		if(Inst_Cache[set_index][idc].tag == new_tag){
 			if (Inst_Cache[set_index][idc].mesi != I){
 				InstUpdateLRU(set_index, idc);
@@ -48,13 +48,13 @@ int InstHit(int set_index, int new_tag){
 //int InstMiss(int tag_value, int idx)
 int InstMiss(int set_index, int new_tag){
 	Stats_Cache.cache_miss++; //increment miss
-	for(int idc = 1;idc<=INST_WAY;idc++){
-		if (Inst_Cache[set_index][idc].mesi == I){
+	for(int idc = 0; idc < INST_WAY; idc++){
+		if(Inst_Cache[set_index][idc].mesi == I){
+			UpdateMESI(set_index, idc, n);
 			Inst_Cache[set_index][idc].tag = new_tag;
 			Inst_Cache[set_index][idc].index = temp_index;
 			Inst_Cache[set_index][idc].address = address;
 			Inst_Cache[set_index][idc].b_offset = temp_offset;
-			UpdateMESI(set_index, idc, n);
 			InstUpdateLRU(set_index, idc);
 			return TRUE;
 		}
@@ -110,4 +110,5 @@ void PrintInstCache(void){
 			}
 		}
 	}	
+	return;
 }	
