@@ -21,6 +21,7 @@ int DataRead(int set_index, int new_tag){
 int DataHit(int set_index, int new_tag){
 	for(int i = 0; i < DATA_WAY; i++){
 		if((Data_Cache[set_index][i].mesi != I) && (Data_Cache[set_index][i].tag == new_tag)){
+			miss = FALSE;
 			UpdateMESI(set_index, i, n);
 			DataUpdateLRU(set_index, i);
 			Stats_Cache.cache_hit++;
