@@ -105,7 +105,7 @@ void PrintDataCache(){
 				printf("-----\n");
 				printf("SET: %lx WAY: %d MESI: %d LRU: %d ADDRESS: %lx \n", 
 					(long)Data_Cache[index_set][index_line].index,
-					index_line,
+					index_line + 1,
 					Data_Cache[index_set][index_line].mesi,
 					Data_Cache[index_set][index_line].lru,
 					(long)Data_Cache[index_set][index_line].address);
