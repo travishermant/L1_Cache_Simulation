@@ -11,7 +11,7 @@
 L1_READ_DATA	n = 0	// read data request to L1 data cache
 L1_WRITE_DATA	n = 1	// write data request to L1 data cache
 L1_READ_INST	n = 2	// instruction fetch (a read request to L1 instruction cache)
-L2_INVALID		n = 3	// invalidate command from L2
+L2_INVALID	n = 3	// invalidate command from L2
 L2_SNOOP_DATA	n = 4	// data request from L2 (in response to snoop)
 */
 int UpdateMESI(int set, int way, int n /* 'n' from trace file */){
@@ -30,7 +30,7 @@ int UpdateMESI(int set, int way, int n /* 'n' from trace file */){
 		miss = FALSE;
 	}
 	else if((n == 0) && (Data_Cache[set][way].mesi == E) && (miss == FALSE)){
-	//If read command stay in shared state
+	//If read command go to shared state
 		Data_Cache[set][way].mesi = S;
 		check = 0;
 		miss = FALSE;
@@ -41,7 +41,7 @@ int UpdateMESI(int set, int way, int n /* 'n' from trace file */){
 		check = 0;
 	}
 	if((n == 0) && (Data_Cache[set][way].mesi == S)){
-	//Moving from invalid to exclusive
+	//If read and in shared state stay there
 		Data_Cache[set][way].mesi = S;
 		check = 0;
 	}
@@ -56,12 +56,12 @@ int UpdateMESI(int set, int way, int n /* 'n' from trace file */){
 		check = 0;
 	}
 	else if((n == 1) && (Data_Cache[set][way].mesi == I)){
-	//If write command and in the exclusive state go to modified
+	//If write command and in the invalid state go to modified
 		Data_Cache[set][way].mesi = M;
 		check = 0;
 	}
 	else if(n == 2){
-		Inst_Cache[set][way].mesi =  S; //??
+		Inst_Cache[set][way].mesi =  S;
 		check = 0;
 	}
 	else if(n == 3){
