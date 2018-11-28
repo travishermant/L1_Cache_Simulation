@@ -50,7 +50,7 @@ int UpdateMESI(int set, int way, int n /* 'n' from trace file */){
 			if(Data_Cache[set][way].tag == temp_tag){
 				if((Data_Cache[set][way].mesi == M) && (mode == 1))
 					printf("Return data to L2    <0x%lx>\n", (long)address);
-				Data_Cache[set][way].mesi = I;
+				Data_Cache[set][way].mesi = S;
 				DataUpdateLRU(set,way);
 				return 0;
 			}
