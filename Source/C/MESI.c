@@ -56,8 +56,8 @@ int UpdateMESI(int set, int way, int n /* 'n' from trace file */){
 		check = 0;
 	}
 	else if((n == 1) && (Data_Cache[set][way].mesi == I)){
-	//If write command and in the invalid state go to modified
-		Data_Cache[set][way].mesi = M;
+	//If write command and in the invalid state go to exclusive
+		Data_Cache[set][way].mesi = E;
 		check = 0;
 	}
 	else if(n == 2){
