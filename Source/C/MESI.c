@@ -40,7 +40,7 @@ int UpdateMESI(int set, int way, int n /* 'n' from trace file */){
 		Data_Cache[set][way].mesi = M;
 		check = 0;
 	}
-	if((n == 0) && (Data_Cache[set][way].mesi == S)){
+	else if((n == 0) && (Data_Cache[set][way].mesi == S)){
 	//If read and in shared state stay there
 		Data_Cache[set][way].mesi = S;
 		check = 0;
