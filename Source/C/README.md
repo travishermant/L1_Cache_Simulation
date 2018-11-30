@@ -1,7 +1,1 @@
-Updated LRU files and MESI files
-
-Needs to be compiled still
-
-Sill unsure about the snooping mesi protocol and where to implement
-
--Alex
+Contains all source code for L1 simulation cache
