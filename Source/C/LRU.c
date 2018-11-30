@@ -54,7 +54,7 @@ int DataUpdateLRU(int set, int way)
 		check = 0;
 	}
 	else if(Data_Cache[set][way].lru == -1){
-	// Initializing the cache, so NULL means empty way
+	// so -1 means empty way
 		Data_Cache[set][way].lru = DATA_WAY - 1;
 		while(way > 0){
 			--way;
